@@ -2,29 +2,66 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white dark:bg-black relative overflow-hidden">
       {/* Animated Background Elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/* Floating Circles with More Pronounced Motion */}
-        <div className="absolute top-20 left-10 w-32 h-32 bg-gray-200 dark:bg-gray-800 rounded-full opacity-40 animate-pulse" style={{animationDuration: '2s'}}></div>
-        <div className="absolute top-40 right-20 w-24 h-24 bg-gray-300 dark:bg-gray-700 rounded-full opacity-50 animate-bounce" style={{animationDuration: '2s'}}></div>
-        <div className="absolute bottom-32 left-1/4 w-16 h-16 bg-gray-400 dark:bg-gray-600 rounded-full opacity-45 animate-pulse" style={{animationDelay: '0.5s', animationDuration: '1.5s'}}></div>
-        <div className="absolute bottom-20 right-1/3 w-20 h-20 bg-gray-200 dark:bg-gray-800 rounded-full opacity-40 animate-bounce" style={{animationDuration: '2.5s', animationDelay: '1s'}}></div>
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {/* Falling Circles */}
+        <div className="absolute -top-10 left-1/4 w-16 h-16 bg-gray-200 dark:bg-gray-800 rounded-full opacity-40" style={{
+          animation: 'fall 4s linear infinite',
+          animationDelay: '0s'
+        }}></div>
         
-        {/* Additional Moving Elements */}
-        <div className="absolute top-1/2 left-1/3 w-12 h-12 bg-gray-300 dark:bg-gray-700 rounded-full opacity-35 animate-pulse" style={{animationDuration: '3s', animationDelay: '1.5s'}}></div>
-        <div className="absolute top-1/3 right-1/4 w-28 h-28 bg-gray-100 dark:bg-gray-900 rounded-full opacity-30 animate-bounce" style={{animationDuration: '4s', animationDelay: '0.8s'}}></div>
+        <div className="absolute -top-10 left-1/2 w-12 h-12 bg-gray-300 dark:bg-gray-700 rounded-full opacity-45" style={{
+          animation: 'fall 5s linear infinite',
+          animationDelay: '1s'
+        }}></div>
         
-        {/* Animated Grid Pattern */}
-        <div className="absolute inset-0 opacity-10 dark:opacity-20">
-          <div className="absolute inset-0 animate-pulse" style={{
-            backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(0,0,0,0.3) 1px, transparent 0)',
-            backgroundSize: '25px 25px',
-            animationDuration: '4s'
+        <div className="absolute -top-10 right-1/3 w-20 h-20 bg-gray-100 dark:bg-gray-900 rounded-full opacity-35" style={{
+          animation: 'fall 6s linear infinite',
+          animationDelay: '2s'
+        }}></div>
+        
+        <div className="absolute -top-10 left-1/6 w-14 h-14 bg-gray-400 dark:bg-gray-600 rounded-full opacity-50" style={{
+          animation: 'fall 4.5s linear infinite',
+          animationDelay: '0.5s'
+        }}></div>
+        
+        <div className="absolute -top-10 right-1/4 w-18 h-18 bg-gray-200 dark:bg-gray-800 rounded-full opacity-40" style={{
+          animation: 'fall 5.5s linear infinite',
+          animationDelay: '1.5s'
+        }}></div>
+        
+        <div className="absolute -top-10 left-2/3 w-10 h-10 bg-gray-300 dark:bg-gray-700 rounded-full opacity-45" style={{
+          animation: 'fall 3.5s linear infinite',
+          animationDelay: '2.5s'
+        }}></div>
+        
+        {/* Additional falling elements */}
+        <div className="absolute -top-10 right-1/6 w-22 h-22 bg-gray-100 dark:bg-gray-900 rounded-full opacity-30" style={{
+          animation: 'fall 7s linear infinite',
+          animationDelay: '3s'
+        }}></div>
+        
+        <div className="absolute -top-10 left-1/5 w-8 h-8 bg-gray-400 dark:bg-gray-600 rounded-full opacity-55" style={{
+          animation: 'fall 3s linear infinite',
+          animationDelay: '1.8s'
+        }}></div>
+        
+        <div className="absolute -top-10 right-1/2 w-13 h-13 bg-gray-200 dark:bg-gray-800 rounded-full opacity-40" style={{
+          animation: 'fall 4.8s linear infinite',
+          animationDelay: '3.5s'
+        }}></div>
+        
+        <div className="absolute -top-10 left-3/4 w-15 h-15 bg-gray-300 dark:bg-gray-700 rounded-full opacity-35" style={{
+          animation: 'fall 5.2s linear infinite',
+          animationDelay: '4s'
+        }}></div>
+        
+        {/* Subtle Grid Pattern */}
+        <div className="absolute inset-0 opacity-5 dark:opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(0,0,0,0.15) 1px, transparent 0)',
+            backgroundSize: '20px 20px'
           }}></div>
         </div>
-        
-        {/* Floating Lines */}
-        <div className="absolute top-1/4 left-0 w-full h-px bg-gray-200 dark:bg-gray-800 opacity-30 animate-pulse" style={{animationDuration: '3s', animationDelay: '2s'}}></div>
-        <div className="absolute bottom-1/3 right-0 w-px h-32 bg-gray-200 dark:bg-gray-800 opacity-30 animate-pulse" style={{animationDuration: '2.5s', animationDelay: '1.2s'}}></div>
       </div>
       {/* Hero Section */}
       <div className="max-w-4xl mx-auto px-6 py-24 sm:py-32">
