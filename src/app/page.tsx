@@ -14,6 +14,7 @@ export default function Home() {
   });
   const [isValidatingUsername, setIsValidatingUsername] = useState(false);
   const [isUsernameValid, setIsUsernameValid] = useState(false);
+  const [showSummary, setShowSummary] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -70,6 +71,9 @@ export default function Home() {
         if (!formData.email || !formData.fullName) return;
       } else if (currentStep === 3) {
         if (!formData.phoneNumber) return;
+        // Show summary when moving from step 3
+        setShowSummary(true);
+        return;
       }
       setCurrentStep(currentStep + 1);
     }
@@ -93,6 +97,7 @@ export default function Home() {
     });
     setIsUsernameValid(false);
     setIsValidatingUsername(false);
+    setShowSummary(false);
   };
   return (
     <div className="min-h-screen bg-white dark:bg-black relative overflow-hidden">
@@ -366,8 +371,8 @@ export default function Home() {
                     />
                   </div>
                   
-                  {/* Summary - only show after phone number is entered */}
-                  {formData.phoneNumber && (
+                  {/* Summary - only show after clicking Next */}
+                  {showSummary && (
                     <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
                       <h4 className="text-sm font-light text-black dark:text-white mb-4">Summary</h4>
                       <div className="text-sm text-gray-600 dark:text-gray-400 space-y-2">
