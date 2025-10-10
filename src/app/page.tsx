@@ -68,6 +68,8 @@ export default function Home() {
         if (!formData.username || !formData.amount || !isUsernameValid) return;
       } else if (currentStep === 2) {
         if (!formData.email || !formData.fullName) return;
+      } else if (currentStep === 3) {
+        if (!formData.phoneNumber) return;
       }
       setCurrentStep(currentStep + 1);
     }
@@ -414,7 +416,12 @@ export default function Home() {
               ) : (
                 <button
                   onClick={handleSubmit}
-                  className="px-8 py-3 text-sm font-light text-white bg-black dark:bg-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors duration-200"
+                  disabled={!formData.phoneNumber}
+                  className={`px-8 py-3 text-sm font-light transition-colors duration-200 ${
+                    !formData.phoneNumber
+                      ? "text-gray-400 bg-gray-200 dark:bg-gray-700 cursor-not-allowed"
+                      : "text-white bg-black dark:bg-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200"
+                  }`}
                 >
                   Fund Account
                 </button>
