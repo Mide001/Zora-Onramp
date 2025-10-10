@@ -2,19 +2,19 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white dark:bg-black relative overflow-hidden">
       {/* Animated Background Elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/* Floating Circles with Color Accents */}
-        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-blue-200 to-blue-300 dark:from-blue-800 dark:to-blue-900 rounded-full opacity-60 animate-pulse" style={{animationDuration: '2s'}}></div>
-        <div className="absolute top-40 right-20 w-24 h-24 bg-gradient-to-br from-purple-200 to-purple-300 dark:from-purple-800 dark:to-purple-900 rounded-full opacity-70 animate-bounce" style={{animationDuration: '2s'}}></div>
-        <div className="absolute bottom-32 left-1/4 w-16 h-16 bg-gradient-to-br from-emerald-200 to-emerald-300 dark:from-emerald-800 dark:to-emerald-900 rounded-full opacity-65 animate-pulse" style={{animationDelay: '0.5s', animationDuration: '1.5s'}}></div>
-        <div className="absolute bottom-20 right-1/3 w-20 h-20 bg-gradient-to-br from-orange-200 to-orange-300 dark:from-orange-800 dark:to-orange-900 rounded-full opacity-60 animate-bounce" style={{animationDuration: '2.5s', animationDelay: '1s'}}></div>
+      <div className="absolute inset-0">
+        {/* Interactive Floating Circles */}
+        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-blue-200 to-blue-300 dark:from-blue-800 dark:to-blue-900 rounded-full opacity-60 animate-pulse hover:scale-110 hover:opacity-80 hover:-translate-x-4 hover:-translate-y-4 transition-all duration-500 cursor-pointer" style={{animationDuration: '2s'}}></div>
+        <div className="absolute top-40 right-20 w-24 h-24 bg-gradient-to-br from-purple-200 to-purple-300 dark:from-purple-800 dark:to-purple-900 rounded-full opacity-70 animate-bounce hover:scale-110 hover:opacity-80 hover:translate-x-4 hover:-translate-y-4 transition-all duration-500 cursor-pointer" style={{animationDuration: '2s'}}></div>
+        <div className="absolute bottom-32 left-1/4 w-16 h-16 bg-gradient-to-br from-emerald-200 to-emerald-300 dark:from-emerald-800 dark:to-emerald-900 rounded-full opacity-65 animate-pulse hover:scale-110 hover:opacity-80 hover:-translate-x-3 hover:translate-y-3 transition-all duration-500 cursor-pointer" style={{animationDelay: '0.5s', animationDuration: '1.5s'}}></div>
+        <div className="absolute bottom-20 right-1/3 w-20 h-20 bg-gradient-to-br from-orange-200 to-orange-300 dark:from-orange-800 dark:to-orange-900 rounded-full opacity-60 animate-bounce hover:scale-110 hover:opacity-80 hover:translate-x-3 hover:translate-y-3 transition-all duration-500 cursor-pointer" style={{animationDuration: '2.5s', animationDelay: '1s'}}></div>
         
-        {/* Additional Moving Elements */}
-        <div className="absolute top-1/2 left-1/3 w-12 h-12 bg-gradient-to-br from-pink-200 to-pink-300 dark:from-pink-800 dark:to-pink-900 rounded-full opacity-55 animate-pulse" style={{animationDuration: '3s', animationDelay: '1.5s'}}></div>
-        <div className="absolute top-1/3 right-1/4 w-28 h-28 bg-gradient-to-br from-indigo-200 to-indigo-300 dark:from-indigo-800 dark:to-indigo-900 rounded-full opacity-50 animate-bounce" style={{animationDuration: '4s', animationDelay: '0.8s'}}></div>
+        {/* Additional Interactive Elements */}
+        <div className="absolute top-1/2 left-1/3 w-12 h-12 bg-gradient-to-br from-pink-200 to-pink-300 dark:from-pink-800 dark:to-pink-900 rounded-full opacity-55 animate-pulse hover:scale-125 hover:opacity-80 hover:-translate-x-2 hover:-translate-y-2 transition-all duration-500 cursor-pointer" style={{animationDuration: '3s', animationDelay: '1.5s'}}></div>
+        <div className="absolute top-1/3 right-1/4 w-28 h-28 bg-gradient-to-br from-indigo-200 to-indigo-300 dark:from-indigo-800 dark:to-indigo-900 rounded-full opacity-50 animate-bounce hover:scale-110 hover:opacity-80 hover:translate-x-5 hover:-translate-y-5 transition-all duration-500 cursor-pointer" style={{animationDuration: '4s', animationDelay: '0.8s'}}></div>
         
         {/* Animated Grid Pattern */}
-        <div className="absolute inset-0 opacity-10 dark:opacity-20">
+        <div className="absolute inset-0 opacity-10 dark:opacity-20 pointer-events-none">
           <div className="absolute inset-0 animate-pulse" style={{
             backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(0,0,0,0.3) 1px, transparent 0)',
             backgroundSize: '25px 25px',
@@ -23,8 +23,8 @@ export default function Home() {
         </div>
         
         {/* Floating Lines with Color */}
-        <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-300 dark:via-blue-700 to-transparent opacity-50 animate-pulse" style={{animationDuration: '3s', animationDelay: '2s'}}></div>
-        <div className="absolute bottom-1/3 right-0 w-px h-32 bg-gradient-to-b from-transparent via-purple-300 dark:via-purple-700 to-transparent opacity-50 animate-pulse" style={{animationDuration: '2.5s', animationDelay: '1.2s'}}></div>
+        <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-300 dark:via-blue-700 to-transparent opacity-50 animate-pulse pointer-events-none" style={{animationDuration: '3s', animationDelay: '2s'}}></div>
+        <div className="absolute bottom-1/3 right-0 w-px h-32 bg-gradient-to-b from-transparent via-purple-300 dark:via-purple-700 to-transparent opacity-50 animate-pulse pointer-events-none" style={{animationDuration: '2.5s', animationDelay: '1.2s'}}></div>
       </div>
       {/* Hero Section */}
       <div className="max-w-4xl mx-auto px-6 py-24 sm:py-32">
