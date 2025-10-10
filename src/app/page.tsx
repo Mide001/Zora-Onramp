@@ -235,7 +235,7 @@ export default function Home() {
                       value={formData.username}
                       onChange={handleInputChange}
                       placeholder="Enter Zora username"
-                      className="w-full px-0 py-3 border-0 border-b border-gray-300 dark:border-gray-600 bg-transparent text-black dark:text-white font-light focus:outline-none focus:border-black dark:focus:border-white transition-colors duration-200"
+                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-transparent text-black dark:text-white font-light focus:outline-none focus:border-black dark:focus:border-white transition-colors duration-200"
                     />
                   </div>
                   <div>
@@ -248,7 +248,7 @@ export default function Home() {
                       value={formData.amount}
                       onChange={handleInputChange}
                       placeholder="Enter amount in Naira"
-                      className="w-full px-0 py-3 border-0 border-b border-gray-300 dark:border-gray-600 bg-transparent text-black dark:text-white font-light focus:outline-none focus:border-black dark:focus:border-white transition-colors duration-200"
+                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-transparent text-black dark:text-white font-light focus:outline-none focus:border-black dark:focus:border-white transition-colors duration-200"
                     />
                   </div>
                 </div>
@@ -266,7 +266,7 @@ export default function Home() {
                       value={formData.email}
                       onChange={handleInputChange}
                       placeholder="Enter your email"
-                      className="w-full px-0 py-3 border-0 border-b border-gray-300 dark:border-gray-600 bg-transparent text-black dark:text-white font-light focus:outline-none focus:border-black dark:focus:border-white transition-colors duration-200"
+                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-transparent text-black dark:text-white font-light focus:outline-none focus:border-black dark:focus:border-white transition-colors duration-200"
                     />
                   </div>
                   <div>
@@ -279,7 +279,7 @@ export default function Home() {
                       value={formData.fullName}
                       onChange={handleInputChange}
                       placeholder="Enter your full name"
-                      className="w-full px-0 py-3 border-0 border-b border-gray-300 dark:border-gray-600 bg-transparent text-black dark:text-white font-light focus:outline-none focus:border-black dark:focus:border-white transition-colors duration-200"
+                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-transparent text-black dark:text-white font-light focus:outline-none focus:border-black dark:focus:border-white transition-colors duration-200"
                     />
                   </div>
                 </div>
@@ -297,7 +297,7 @@ export default function Home() {
                       value={formData.phoneNumber}
                       onChange={handleInputChange}
                       placeholder="Enter your phone number"
-                      className="w-full px-0 py-3 border-0 border-b border-gray-300 dark:border-gray-600 bg-transparent text-black dark:text-white font-light focus:outline-none focus:border-black dark:focus:border-white transition-colors duration-200"
+                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-transparent text-black dark:text-white font-light focus:outline-none focus:border-black dark:focus:border-white transition-colors duration-200"
                     />
                   </div>
                   
