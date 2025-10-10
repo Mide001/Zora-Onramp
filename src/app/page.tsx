@@ -115,7 +115,7 @@ export default function Home() {
               <Palette className="w-8 h-8 text-gray-600 dark:text-gray-400" />
             </div>
             <h3 className="text-lg font-light text-black dark:text-white mb-2">
-              Zora Ready
+              Creator Economy
             </h3>
             <p className="text-sm text-gray-600 dark:text-gray-400 font-light leading-relaxed">
               Get USDC to trade tokenized content and support creators on Zora's decentralized platform
