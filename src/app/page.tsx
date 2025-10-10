@@ -35,6 +35,8 @@ export default function Home() {
   const [paymentStatus, setPaymentStatus] = useState<'pending' | 'processing' | 'completed' | 'failed'>('pending');
   const [usdcTxHash, setUsdcTxHash] = useState<string>("");
   const [isCreatingOrder, setIsCreatingOrder] = useState(false);
+  const [pollingStartTime, setPollingStartTime] = useState<number | null>(null);
+  const [timeUntilPolling, setTimeUntilPolling] = useState<number>(0);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -142,6 +144,7 @@ export default function Home() {
         setPaymentData(data.order);
         setCurrentStep(4); // Move to payment step
         setTimeLeft(900); // Reset countdown
+        setPollingStartTime(Date.now() + 10000); // Set when polling will start (10 seconds from now)
       }
     } catch (error) {
       console.error('Error creating order:', error);
@@ -169,6 +172,8 @@ export default function Home() {
     setPaymentStatus('pending');
     setUsdcTxHash("");
     setIsCreatingOrder(false);
+    setPollingStartTime(null);
+    setTimeUntilPolling(0);
   };
 
   // Countdown timer effect
@@ -181,14 +186,40 @@ export default function Home() {
     }
   }, [currentStep, timeLeft]);
 
+  // Polling countdown effect
+  useEffect(() => {
+    if (pollingStartTime && currentStep === 4 && paymentStatus === 'pending') {
+      const updateCountdown = () => {
+        const now = Date.now();
+        const timeLeft = Math.max(0, Math.ceil((pollingStartTime - now) / 1000));
+        setTimeUntilPolling(timeLeft);
+      };
+
+      updateCountdown();
+      const interval = setInterval(updateCountdown, 1000);
+
+      return () => clearInterval(interval);
+    }
+  }, [pollingStartTime, currentStep, paymentStatus]);
+
   // Payment status polling effect
   useEffect(() => {
     if (currentStep === 4 && paymentData && paymentStatus === 'pending') {
-      const interval = setInterval(() => {
-        checkPaymentStatus(paymentData.orderId);
-      }, 5000); // Check every 5 seconds
+      let intervalId: NodeJS.Timeout;
+      
+      // Wait 10 seconds before starting to poll (give user time to make payment)
+      const initialDelay = setTimeout(() => {
+        intervalId = setInterval(() => {
+          checkPaymentStatus(paymentData.orderId);
+        }, 5000); // Check every 5 seconds
+      }, 10000);
 
-      return () => clearInterval(interval);
+      return () => {
+        clearTimeout(initialDelay);
+        if (intervalId) {
+          clearInterval(intervalId);
+        }
+      };
     }
   }, [currentStep, paymentData, paymentStatus]);
 
@@ -545,6 +576,15 @@ export default function Home() {
                           {formatTime(timeLeft)}
                         </p>
                       </div>
+
+                      {/* Polling Status */}
+                      {timeUntilPolling > 0 && (
+                        <div className="text-center p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded">
+                          <p className="text-sm text-blue-600 dark:text-blue-400">
+                            Payment monitoring will start in {timeUntilPolling} seconds
+                          </p>
+                        </div>
+                      )}
 
                       {/* Payment Details */}
                       <div className="space-y-4">
