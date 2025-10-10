@@ -1,15 +1,15 @@
 # Zora Onramp Frontend
 
-A modern Next.js frontend application that enables Nigerian users to seamlessly convert Naira to USDC/ETH and join the Zora creator economy.
+A modern Next.js frontend application that enables Nigerian users to seamlessly convert Naira to USDC and join the Zora creator economy.
 
 ## 🎯 Project Goal
 
 **Bridge the gap between traditional Nigerian banking and the decentralized Zora ecosystem.**
 
-Zora Onramp solves a critical problem for Nigerian creators and collectors who want to participate in the Zora marketplace but face barriers in acquiring USDC/ETH. Our platform provides:
+Zora Onramp solves a critical problem for Nigerian creators and collectors who want to participate in the Zora marketplace but face barriers in acquiring USDC. Our platform provides:
 
-- **Direct Naira to Crypto Conversion**: Convert Nigerian Naira directly to USDC/ETH
-- **Zora Ecosystem Integration**: Get crypto assets ready for Zora marketplace participation
+- **Direct Naira to USDC Conversion**: Convert Nigerian Naira directly to USDC
+- **Zora Ecosystem Integration**: Get USDC ready for Zora marketplace participation
 - **Secure & Transparent**: Blockchain-powered transactions with smart contract escrow
 - **User-Friendly Experience**: Modern, responsive interface designed for Nigerian users
 
@@ -22,7 +22,7 @@ Zora Onramp solves a critical problem for Nigerian creators and collectors who w
 - **Coming Soon Page**: Professional placeholder while backend integration is completed
 
 ### Planned Features
-- **Conversion Interface**: Simple form to convert Naira to USDC/ETH
+- **Conversion Interface**: Simple form to convert Naira to USDC
 - **Payment Integration**: Flutterwave integration for Naira payments
 - **Wallet Connection**: Connect Zora wallets and addresses
 - **Transaction Tracking**: Real-time status updates for conversions
@@ -114,7 +114,7 @@ frontend/
 ### External Services
 - **Flutterwave**: Naira payment processing
 - **Zora SDK**: Address resolution and profile data
-- **Blockchain**: USDC/ETH transaction handling
+- **Blockchain**: USDC transaction handling
 
 ## 🌍 Target Audience
 
@@ -133,7 +133,7 @@ frontend/
 ## 📈 Success Metrics
 
 ### User Engagement
-- **Conversion Rate**: Naira to USDC/ETH success rate
+- **Conversion Rate**: Naira to USDC success rate
 - **User Retention**: Repeat usage patterns
 - **Transaction Volume**: Total value converted
 - **User Satisfaction**: Feedback and ratings
@@ -226,4 +226,4 @@ This project is licensed under the ISC License - see the LICENSE file for detail
 
 ---
 
-*Empowering Nigerian creators to participate in the global creator economy through seamless crypto conversion.*
+*Empowering Nigerian creators to participate in the global creator economy through seamless USDC conversion.*

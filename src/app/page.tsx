@@ -7,7 +7,7 @@ export default function Home() {
             Zora Onramp
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
-            Seamlessly convert Nigerian Naira to USDC/ETH and join the Zora ecosystem
+            Seamlessly convert Nigerian Naira to USDC and join the Zora ecosystem
           </p>
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 max-w-md mx-auto">
             <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
@@ -26,7 +26,7 @@ export default function Home() {
               Naira Support
             </h3>
             <p className="text-gray-600 dark:text-gray-300">
-              Convert your Nigerian Naira directly to crypto assets
+              Convert your Nigerian Naira directly to USDC
             </p>
           </div>
           
@@ -46,7 +46,7 @@ export default function Home() {
               Zora Ready
             </h3>
             <p className="text-gray-600 dark:text-gray-300">
-              Get USDC/ETH ready for the Zora creator economy
+              Get USDC ready for the Zora creator economy
             </p>
           </div>
         </div>
