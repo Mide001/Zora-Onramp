@@ -89,6 +89,8 @@ export default function Home() {
       fullName: "",
       phoneNumber: ""
     });
+    setIsUsernameValid(false);
+    setIsValidatingUsername(false);
   };
   return (
     <div className="min-h-screen bg-white dark:bg-black relative overflow-hidden">
