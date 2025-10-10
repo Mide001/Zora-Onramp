@@ -4,14 +4,14 @@ export default function Home() {
       {/* Animated Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Floating Circles with More Pronounced Motion */}
-        <div className="absolute top-20 left-10 w-32 h-32 bg-blue-200 dark:bg-blue-800 rounded-full opacity-60 animate-pulse" style={{animationDuration: '2s'}}></div>
-        <div className="absolute top-40 right-20 w-24 h-24 bg-blue-300 dark:bg-blue-700 rounded-full opacity-70 animate-bounce" style={{animationDuration: '2s'}}></div>
-        <div className="absolute bottom-32 left-1/4 w-16 h-16 bg-blue-400 dark:bg-blue-600 rounded-full opacity-65 animate-pulse" style={{animationDelay: '0.5s', animationDuration: '1.5s'}}></div>
-        <div className="absolute bottom-20 right-1/3 w-20 h-20 bg-blue-200 dark:bg-blue-800 rounded-full opacity-60 animate-bounce" style={{animationDuration: '2.5s', animationDelay: '1s'}}></div>
+        <div className="absolute top-20 left-10 w-32 h-32 bg-gray-600 dark:bg-gray-400 rounded-full opacity-60 animate-pulse" style={{animationDuration: '2s'}}></div>
+        <div className="absolute top-40 right-20 w-24 h-24 bg-gray-700 dark:bg-gray-300 rounded-full opacity-70 animate-bounce" style={{animationDuration: '2s'}}></div>
+        <div className="absolute bottom-32 left-1/4 w-16 h-16 bg-gray-800 dark:bg-gray-200 rounded-full opacity-65 animate-pulse" style={{animationDelay: '0.5s', animationDuration: '1.5s'}}></div>
+        <div className="absolute bottom-20 right-1/3 w-20 h-20 bg-gray-600 dark:bg-gray-400 rounded-full opacity-60 animate-bounce" style={{animationDuration: '2.5s', animationDelay: '1s'}}></div>
         
         {/* Additional Moving Elements */}
-        <div className="absolute top-1/2 left-1/3 w-12 h-12 bg-blue-300 dark:bg-blue-700 rounded-full opacity-55 animate-pulse" style={{animationDuration: '3s', animationDelay: '1.5s'}}></div>
-        <div className="absolute top-1/3 right-1/4 w-28 h-28 bg-blue-100 dark:bg-blue-900 rounded-full opacity-50 animate-bounce" style={{animationDuration: '4s', animationDelay: '0.8s'}}></div>
+        <div className="absolute top-1/2 left-1/3 w-12 h-12 bg-gray-700 dark:bg-gray-300 rounded-full opacity-55 animate-pulse" style={{animationDuration: '3s', animationDelay: '1.5s'}}></div>
+        <div className="absolute top-1/3 right-1/4 w-28 h-28 bg-gray-500 dark:bg-gray-500 rounded-full opacity-50 animate-bounce" style={{animationDuration: '4s', animationDelay: '0.8s'}}></div>
         
         {/* Animated Grid Pattern */}
         <div className="absolute inset-0 opacity-10 dark:opacity-20">
@@ -23,8 +23,7 @@ export default function Home() {
         </div>
         
         {/* Floating Lines */}
-        <div className="absolute top-1/4 left-0 w-full h-px bg-blue-200 dark:bg-blue-800 opacity-50 animate-pulse" style={{animationDuration: '3s', animationDelay: '2s'}}></div>
-        <div className="absolute bottom-1/3 right-0 w-px h-32 bg-blue-200 dark:bg-blue-800 opacity-50 animate-pulse" style={{animationDuration: '2.5s', animationDelay: '1.2s'}}></div>
+        <div className="absolute bottom-1/3 right-0 w-px h-32 bg-gray-600 dark:bg-gray-400 opacity-50 animate-pulse" style={{animationDuration: '2.5s', animationDelay: '1.2s'}}></div>
       </div>
       {/* Hero Section */}
       <div className="max-w-4xl mx-auto px-6 py-24 sm:py-32">
