@@ -1,3 +1,4 @@
+"use client";
 import { Globe, Zap, Palette, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 
