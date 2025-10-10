@@ -30,7 +30,7 @@ export default function Home() {
 
     setIsValidatingUsername(true);
     try {
-      const response = await fetch('/api/validate-zora-username', {
+      const response = await fetch('http://localhost:3002/api/validate-zora-username', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
