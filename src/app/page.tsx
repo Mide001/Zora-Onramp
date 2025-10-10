@@ -54,9 +54,16 @@ export default function Home() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'ngrok-skip-browser-warning': 'true'
         },
         body: JSON.stringify({ username }),
       });
+      
+      if (!response.ok) {
+        console.error('Username validation failed:', response.status);
+        setIsUsernameValid(false);
+        return;
+      }
       
       const data = await response.json();
       setIsUsernameValid(data.isValid);
@@ -112,6 +119,7 @@ export default function Home() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'ngrok-skip-browser-warning': 'true'
         },
         body: JSON.stringify({
           address: zoraAddress, // Use the resolved Zora address
@@ -121,6 +129,11 @@ export default function Home() {
           phone: formData.phoneNumber
         }),
       });
+      
+      if (!response.ok) {
+        console.error('Order creation failed:', response.status);
+        return;
+      }
       
       const data = await response.json();
       if (data.success) {
@@ -182,16 +195,36 @@ export default function Home() {
 
   const checkPaymentStatus = async (orderId: string) => {
     try {
-      const response = await fetch(`https://f7d8ecdc1a89.ngrok-free.app/api/orders/${orderId}`);
+      const response = await fetch(`https://f7d8ecdc1a89.ngrok-free.app/api/orders/${orderId}`, {
+        headers: {
+          'ngrok-skip-browser-warning': 'true'
+        }
+      });
+      
+      if (!response.ok) {
+        console.error('API response not ok:', response.status, response.statusText);
+        return;
+      }
+      
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        console.error('Response is not JSON:', contentType);
+        const text = await response.text();
+        console.error('Response text:', text.substring(0, 200));
+        return;
+      }
+      
       const data = await response.json();
+      console.log('Payment status response:', data);
       
       if (data.success && data.order) {
-        if (data.order.status === 'completed') {
+        if (data.order.fulfilled) {
           setPaymentStatus('completed');
           setUsdcTxHash(data.order.usdcTxHash || '');
         } else if (data.order.status === 'failed') {
           setPaymentStatus('failed');
-        } else if (data.order.status === 'processing') {
+        } else {
+          // If not fulfilled and not failed, it's still processing
           setPaymentStatus('processing');
         }
       }
