@@ -28,6 +28,7 @@ export default function Home() {
   });
   const [isValidatingUsername, setIsValidatingUsername] = useState(false);
   const [isUsernameValid, setIsUsernameValid] = useState(false);
+  const [zoraAddress, setZoraAddress] = useState<string>("");
   const [showSummary, setShowSummary] = useState(false);
   const [paymentData, setPaymentData] = useState<PaymentData | null>(null);
   const [timeLeft, setTimeLeft] = useState(900); // 15 minutes in seconds
@@ -57,6 +58,9 @@ export default function Home() {
       
       const data = await response.json();
       setIsUsernameValid(data.isValid);
+      if (data.isValid && data.address) {
+        setZoraAddress(data.address);
+      }
     } catch (error) {
       console.error('Error validating username:', error);
       setIsUsernameValid(false);
@@ -108,7 +112,7 @@ export default function Home() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          address: formData.username, // This should be the Zora address from validation
+          address: zoraAddress, // Use the resolved Zora address
           amountNGN: parseFloat(formData.amount),
           email: formData.email,
           fullName: formData.fullName,
@@ -139,6 +143,7 @@ export default function Home() {
     });
     setIsUsernameValid(false);
     setIsValidatingUsername(false);
+    setZoraAddress("");
     setShowSummary(false);
     setPaymentData(null);
     setTimeLeft(900);
