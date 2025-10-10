@@ -30,7 +30,7 @@ export default function Home() {
       {/* Features */}
       <div className="max-w-4xl mx-auto px-6 pb-24">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
-          <div className="text-center border border-gray-200 dark:border-gray-800 py-8 px-6">
+          <div className="text-center border-2 border-gray-300 dark:border-gray-700 py-8 px-6">
             <div className="text-2xl mb-4">🇳🇬</div>
             <h3 className="text-lg font-light text-black dark:text-white mb-2">
               Naira Support
@@ -40,7 +40,7 @@ export default function Home() {
             </p>
           </div>
           
-          <div className="text-center border border-gray-200 dark:border-gray-800 py-8 px-6">
+          <div className="text-center border-2 border-gray-300 dark:border-gray-700 py-8 px-6">
             <div className="text-2xl mb-4">⚡</div>
             <h3 className="text-lg font-light text-black dark:text-white mb-2">
               Fast & Secure
@@ -50,7 +50,7 @@ export default function Home() {
             </p>
           </div>
           
-          <div className="text-center border border-gray-200 dark:border-gray-800 py-8 px-6">
+          <div className="text-center border-2 border-gray-300 dark:border-gray-700 py-8 px-6">
             <div className="text-2xl mb-4">🎨</div>
             <h3 className="text-lg font-light text-black dark:text-white mb-2">
               Zora Ready
