@@ -600,7 +600,8 @@ export default function Home() {
 
               {currentStep === 4 && paymentData && (
                 <div className="space-y-6">
-                  {paymentStatus === 'pending' && (
+                  {/* Always show payment details for pending and processing states */}
+                  {(paymentStatus === 'pending' || paymentStatus === 'processing') && (
                     <>
                       <div className="text-center">
                         <h3 className="text-lg font-light text-black dark:text-white mb-2">
@@ -666,25 +667,28 @@ export default function Home() {
                           </div>
                         </div>
                       </div>
-                    </>
-                  )}
 
-                  {paymentStatus === 'processing' && (
-                    <div className="text-center space-y-4">
-                      <div className="animate-spin w-8 h-8 border-2 border-gray-300 border-t-black dark:border-t-white mx-auto"></div>
-                      <h3 className="text-lg font-light text-black dark:text-white">
-                        Processing Payment
-                      </h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
-                        We're confirming your payment and preparing to release your USDC...
-                      </p>
-                      <button
-                        onClick={() => paymentData && verifyPaymentManually(paymentData.orderId)}
-                        className="px-4 py-2 text-sm text-blue-600 dark:text-blue-400 border border-blue-300 dark:border-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors duration-200"
-                      >
-                        Check Payment Status
-                      </button>
-                    </div>
+                      {/* Processing indicator below payment details */}
+                      {paymentStatus === 'processing' && (
+                        <div className="text-center space-y-3 p-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded">
+                          <div className="animate-spin w-6 h-6 border-2 border-gray-300 border-t-black dark:border-t-white mx-auto"></div>
+                          <div>
+                            <p className="text-sm font-light text-black dark:text-white">
+                              Checking for your payment...
+                            </p>
+                            <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+                              We're monitoring for your transfer
+                            </p>
+                          </div>
+                          <button
+                            onClick={() => paymentData && verifyPaymentManually(paymentData.orderId)}
+                            className="px-3 py-1 text-xs text-blue-600 dark:text-blue-400 border border-blue-300 dark:border-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors duration-200"
+                          >
+                            Check Now
+                          </button>
+                        </div>
+                      )}
+                    </>
                   )}
 
                   {paymentStatus === 'completed' && (
