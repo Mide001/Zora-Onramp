@@ -1,6 +1,45 @@
-import { Globe, Zap, Palette } from "lucide-react";
+import { Globe, Zap, Palette, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { useState } from "react";
 
 export default function Home() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentStep, setCurrentStep] = useState(1);
+  const [formData, setFormData] = useState({
+    username: "",
+    amount: "",
+    email: "",
+    fullName: "",
+    phoneNumber: ""
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const nextStep = () => {
+    if (currentStep < 3) setCurrentStep(currentStep + 1);
+  };
+
+  const prevStep = () => {
+    if (currentStep > 1) setCurrentStep(currentStep - 1);
+  };
+
+  const handleSubmit = () => {
+    // Handle form submission
+    console.log("Form submitted:", formData);
+    setIsModalOpen(false);
+    setCurrentStep(1);
+    setFormData({
+      username: "",
+      amount: "",
+      email: "",
+      fullName: "",
+      phoneNumber: ""
+    });
+  };
   return (
     <div className="min-h-screen bg-white dark:bg-black relative overflow-hidden">
       {/* Animated Background Elements */}
@@ -76,10 +115,13 @@ export default function Home() {
             Convert Nigerian Naira to USDC for the Zora ecosystem
           </p>
 
-          {/* Coming Soon */}
-          <div className="inline-block px-4 py-2 border border-gray-300 dark:border-gray-700 text-sm text-gray-500 dark:text-gray-500 font-light">
-            Coming Soon
-          </div>
+            {/* Fund Zora Button */}
+            <button 
+              onClick={() => setIsModalOpen(true)}
+              className="inline-block px-6 py-3 border border-gray-300 dark:border-gray-700 text-sm text-gray-700 dark:text-gray-300 font-light hover:border-gray-400 dark:hover:border-gray-600 transition-colors duration-300"
+            >
+              Fund Zora
+            </button>
         </div>
       </div>
 
@@ -132,6 +174,191 @@ export default function Home() {
           </p>
         </div>
       </div>
+
+      {/* Multi-step Form Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white dark:bg-gray-900 rounded-lg max-w-md w-full max-h-[90vh] overflow-y-auto">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+              <h2 className="text-lg font-light text-black dark:text-white">
+                Fund Zora Account
+              </h2>
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Progress Indicator */}
+            <div className="flex items-center justify-center p-4 border-b border-gray-200 dark:border-gray-700">
+              <div className="flex items-center space-x-2">
+                {[1, 2, 3].map((step) => (
+                  <div key={step} className="flex items-center">
+                    <div
+                      className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-light ${
+                        step <= currentStep
+                          ? "bg-gray-800 dark:bg-gray-200 text-white dark:text-black"
+                          : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400"
+                      }`}
+                    >
+                      {step}
+                    </div>
+                    {step < 3 && (
+                      <div
+                        className={`w-8 h-px ${
+                          step < currentStep
+                            ? "bg-gray-800 dark:bg-gray-200"
+                            : "bg-gray-200 dark:bg-gray-700"
+                        }`}
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Form Content */}
+            <div className="p-6">
+              {currentStep === 1 && (
+                <div className="space-y-4">
+                  <h3 className="text-md font-light text-black dark:text-white mb-4">
+                    Account Details
+                  </h3>
+                  <div>
+                    <label className="block text-sm font-light text-gray-600 dark:text-gray-400 mb-2">
+                      Zora Username
+                    </label>
+                    <input
+                      type="text"
+                      name="username"
+                      value={formData.username}
+                      onChange={handleInputChange}
+                      placeholder="Enter Zora username"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-sm bg-white dark:bg-gray-800 text-black dark:text-white font-light focus:outline-none focus:border-gray-500 dark:focus:border-gray-400"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-light text-gray-600 dark:text-gray-400 mb-2">
+                      Amount (NGN)
+                    </label>
+                    <input
+                      type="number"
+                      name="amount"
+                      value={formData.amount}
+                      onChange={handleInputChange}
+                      placeholder="Enter amount in Naira"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-sm bg-white dark:bg-gray-800 text-black dark:text-white font-light focus:outline-none focus:border-gray-500 dark:focus:border-gray-400"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {currentStep === 2 && (
+                <div className="space-y-4">
+                  <h3 className="text-md font-light text-black dark:text-white mb-4">
+                    Contact Information
+                  </h3>
+                  <div>
+                    <label className="block text-sm font-light text-gray-600 dark:text-gray-400 mb-2">
+                      Email Address
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      placeholder="Enter your email"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-sm bg-white dark:bg-gray-800 text-black dark:text-white font-light focus:outline-none focus:border-gray-500 dark:focus:border-gray-400"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-light text-gray-600 dark:text-gray-400 mb-2">
+                      Full Name
+                    </label>
+                    <input
+                      type="text"
+                      name="fullName"
+                      value={formData.fullName}
+                      onChange={handleInputChange}
+                      placeholder="Enter your full name"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-sm bg-white dark:bg-gray-800 text-black dark:text-white font-light focus:outline-none focus:border-gray-500 dark:focus:border-gray-400"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {currentStep === 3 && (
+                <div className="space-y-4">
+                  <h3 className="text-md font-light text-black dark:text-white mb-4">
+                    Phone Number
+                  </h3>
+                  <div>
+                    <label className="block text-sm font-light text-gray-600 dark:text-gray-400 mb-2">
+                      Phone Number
+                    </label>
+                    <input
+                      type="tel"
+                      name="phoneNumber"
+                      value={formData.phoneNumber}
+                      onChange={handleInputChange}
+                      placeholder="Enter your phone number"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-sm bg-white dark:bg-gray-800 text-black dark:text-white font-light focus:outline-none focus:border-gray-500 dark:focus:border-gray-400"
+                    />
+                  </div>
+                  
+                  {/* Summary */}
+                  <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-sm">
+                    <h4 className="text-sm font-light text-black dark:text-white mb-2">Summary</h4>
+                    <div className="text-xs text-gray-600 dark:text-gray-400 space-y-1">
+                      <p>Username: {formData.username}</p>
+                      <p>Amount: ₦{formData.amount}</p>
+                      <p>Email: {formData.email}</p>
+                      <p>Name: {formData.fullName}</p>
+                      <p>Phone: {formData.phoneNumber}</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Modal Footer */}
+            <div className="flex items-center justify-between p-6 border-t border-gray-200 dark:border-gray-700">
+              <button
+                onClick={prevStep}
+                disabled={currentStep === 1}
+                className={`flex items-center space-x-2 px-4 py-2 text-sm font-light transition-colors duration-300 ${
+                  currentStep === 1
+                    ? "text-gray-400 cursor-not-allowed"
+                    : "text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+                }`}
+              >
+                <ChevronLeft className="w-4 h-4" />
+                <span>Previous</span>
+              </button>
+
+              {currentStep < 3 ? (
+                <button
+                  onClick={nextStep}
+                  className="flex items-center space-x-2 px-4 py-2 text-sm font-light text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-colors duration-300"
+                >
+                  <span>Next</span>
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              ) : (
+                <button
+                  onClick={handleSubmit}
+                  className="px-6 py-2 text-sm font-light text-white bg-gray-800 dark:bg-gray-200 text-black dark:text-black hover:bg-gray-700 dark:hover:bg-gray-300 transition-colors duration-300"
+                >
+                  Fund Account
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
