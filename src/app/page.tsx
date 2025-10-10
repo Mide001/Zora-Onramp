@@ -351,7 +351,7 @@ export default function Home() {
               ) : (
                 <button
                   onClick={handleSubmit}
-                  className="px-6 py-2 text-sm font-light text-white bg-gray-800 dark:bg-gray-200 text-black dark:text-black hover:bg-gray-700 dark:hover:bg-gray-300 transition-colors duration-300"
+                  className="px-6 py-2 text-sm font-light text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-300"
                 >
                   Fund Account
                 </button>
