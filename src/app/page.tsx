@@ -21,7 +21,15 @@ export default function Home() {
   };
 
   const nextStep = () => {
-    if (currentStep < 3) setCurrentStep(currentStep + 1);
+    if (currentStep < 3) {
+      // Validate current step before proceeding
+      if (currentStep === 1) {
+        if (!formData.username || !formData.amount) return;
+      } else if (currentStep === 2) {
+        if (!formData.email || !formData.fullName) return;
+      }
+      setCurrentStep(currentStep + 1);
+    }
   };
 
   const prevStep = () => {
@@ -334,7 +342,16 @@ export default function Home() {
               {currentStep < 3 ? (
                 <button
                   onClick={nextStep}
-                  className="flex items-center space-x-2 text-sm font-light text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors duration-200"
+                  disabled={
+                    (currentStep === 1 && (!formData.username || !formData.amount)) ||
+                    (currentStep === 2 && (!formData.email || !formData.fullName))
+                  }
+                  className={`flex items-center space-x-2 text-sm font-light transition-colors duration-200 ${
+                    (currentStep === 1 && (!formData.username || !formData.amount)) ||
+                    (currentStep === 2 && (!formData.email || !formData.fullName))
+                      ? "text-gray-400 cursor-not-allowed"
+                      : "text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white"
+                  }`}
                 >
                   <span>Next</span>
                   <ChevronRight className="w-4 h-4" />
