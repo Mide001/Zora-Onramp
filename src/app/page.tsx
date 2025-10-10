@@ -2,6 +2,20 @@
 import { Globe, Zap, Palette, X, ChevronLeft, ChevronRight, Check } from "lucide-react";
 import { useState, useEffect } from "react";
 
+interface VirtualAccount {
+  accountNumber: string;
+  bankName: string;
+  reference: string;
+}
+
+interface PaymentData {
+  orderId: string;
+  orderHash: string;
+  virtualAccount: VirtualAccount;
+  usdcAmount: string;
+  expiresIn: string;
+}
+
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
@@ -15,7 +29,7 @@ export default function Home() {
   const [isValidatingUsername, setIsValidatingUsername] = useState(false);
   const [isUsernameValid, setIsUsernameValid] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
-  const [paymentData, setPaymentData] = useState(null);
+  const [paymentData, setPaymentData] = useState<PaymentData | null>(null);
   const [timeLeft, setTimeLeft] = useState(900); // 15 minutes in seconds
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
