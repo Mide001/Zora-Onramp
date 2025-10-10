@@ -10,6 +10,9 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@reown/walletkit": "^1.2.11",
+    "@walletconnect/core": "^2.22.2",
+    "@walletconnect/utils": "^2.22.2",
     "lucide-react": "^0.545.0",
     "next": "15.5.4",
     "react": "19.1.0",
