@@ -226,6 +226,4 @@ This project is licensed under the ISC License - see the LICENSE file for detail
 
 ---
 
-**Built with ❤️ for the Nigerian Zora community**
-
 *Empowering Nigerian creators to participate in the global creator economy through seamless crypto conversion.*
