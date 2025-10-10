@@ -118,7 +118,7 @@ export default function Home() {
               Zora Ready
             </h3>
             <p className="text-sm text-gray-600 dark:text-gray-400 font-light leading-relaxed">
-              USDC ready for Zora marketplace
+              Get USDC to trade tokenized content and support creators on Zora's decentralized platform
             </p>
           </div>
         </div>
