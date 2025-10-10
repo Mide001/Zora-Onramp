@@ -15,7 +15,7 @@ export default function Home() {
           style={{ animationDuration: "2s" }}
         ></div>
         <div
-          className="absolute bottom-20 left-1/4 w-16 h-16 bg-gray-800 dark:bg-gray-200 rounded-full opacity-65 animate-bounce"
+          className="absolute bottom-27 left-1/4 w-16 h-16 bg-gray-800 dark:bg-gray-200 rounded-full opacity-65 animate-pulse"
           style={{ animationDelay: "0.5s", animationDuration: "1.5s" }}
         ></div>
         <div
