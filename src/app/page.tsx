@@ -254,18 +254,60 @@ export default function Home() {
       console.log('Payment status response:', data);
       
       if (data.success && data.order) {
-        if (data.order.fulfilled) {
+        console.log('Order status check:', {
+          status: data.order.status,
+          fulfilled: data.order.fulfilled,
+          txHash: data.order.txHash
+        });
+        
+        if (data.order.status === 'completed') {
           setPaymentStatus('completed');
-          setUsdcTxHash(data.order.usdcTxHash || '');
+          setUsdcTxHash(data.order.txHash || '');
         } else if (data.order.status === 'failed') {
           setPaymentStatus('failed');
+        } else if (data.order.status === 'confirmed') {
+          setPaymentStatus('processing');
+        } else if (data.order.status === 'pending') {
+          setPaymentStatus('pending');
         } else {
-          // If not fulfilled and not failed, it's still processing
+          // Default to processing for any other status
           setPaymentStatus('processing');
         }
       }
     } catch (error) {
       console.error('Error checking payment status:', error);
+    }
+  };
+
+  const verifyPaymentManually = async (orderId: string) => {
+    try {
+      const response = await fetch(`https://f7d8ecdc1a89.ngrok-free.app/api/orders/${orderId}/verify-payment`, {
+        method: 'POST',
+        headers: {
+          'ngrok-skip-browser-warning': 'true'
+        }
+      });
+      
+      if (!response.ok) {
+        console.error('Manual verification failed:', response.status);
+        return;
+      }
+      
+      const data = await response.json();
+      console.log('Manual verification response:', data);
+      
+      if (data.success && data.order) {
+        if (data.order.status === 'completed') {
+          setPaymentStatus('completed');
+          setUsdcTxHash(data.order.txHash || '');
+        } else if (data.order.status === 'failed') {
+          setPaymentStatus('failed');
+        } else if (data.order.status === 'confirmed') {
+          setPaymentStatus('processing');
+        }
+      }
+    } catch (error) {
+      console.error('Error with manual verification:', error);
     }
   };
   return (
@@ -636,6 +678,12 @@ export default function Home() {
                       <p className="text-sm text-gray-600 dark:text-gray-400">
                         We're confirming your payment and preparing to release your USDC...
                       </p>
+                      <button
+                        onClick={() => paymentData && verifyPaymentManually(paymentData.orderId)}
+                        className="px-4 py-2 text-sm text-blue-600 dark:text-blue-400 border border-blue-300 dark:border-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors duration-200"
+                      >
+                        Check Payment Status
+                      </button>
                     </div>
                   )}
 
