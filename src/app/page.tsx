@@ -366,17 +366,19 @@ export default function Home() {
                     />
                   </div>
                   
-                  {/* Summary */}
-                  <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-                    <h4 className="text-sm font-light text-black dark:text-white mb-4">Summary</h4>
-                    <div className="text-sm text-gray-600 dark:text-gray-400 space-y-2">
-                      <p>Username: {formData.username}</p>
-                      <p>Amount: ₦{formData.amount}</p>
-                      <p>Email: {formData.email}</p>
-                      <p>Name: {formData.fullName}</p>
-                      <p>Phone: {formData.phoneNumber}</p>
+                  {/* Summary - only show after phone number is entered */}
+                  {formData.phoneNumber && (
+                    <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+                      <h4 className="text-sm font-light text-black dark:text-white mb-4">Summary</h4>
+                      <div className="text-sm text-gray-600 dark:text-gray-400 space-y-2">
+                        <p>Username: {formData.username}</p>
+                        <p>Amount: ₦{formData.amount}</p>
+                        <p>Email: {formData.email}</p>
+                        <p>Name: {formData.fullName}</p>
+                        <p>Phone: {formData.phoneNumber}</p>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               )}
             </div>
