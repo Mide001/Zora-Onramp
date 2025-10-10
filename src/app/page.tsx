@@ -34,6 +34,7 @@ export default function Home() {
   const [timeLeft, setTimeLeft] = useState(900); // 15 minutes in seconds
   const [paymentStatus, setPaymentStatus] = useState<'pending' | 'processing' | 'completed' | 'failed'>('pending');
   const [usdcTxHash, setUsdcTxHash] = useState<string>("");
+  const [isCreatingOrder, setIsCreatingOrder] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -113,6 +114,7 @@ export default function Home() {
   };
 
   const handleSubmit = async () => {
+    setIsCreatingOrder(true);
     try {
       // Call backend to create order
       const response = await fetch('https://f7d8ecdc1a89.ngrok-free.app/api/orders/create', {
@@ -143,6 +145,8 @@ export default function Home() {
       }
     } catch (error) {
       console.error('Error creating order:', error);
+    } finally {
+      setIsCreatingOrder(false);
     }
   };
 
@@ -164,6 +168,7 @@ export default function Home() {
     setTimeLeft(900);
     setPaymentStatus('pending');
     setUsdcTxHash("");
+    setIsCreatingOrder(false);
   };
 
   // Countdown timer effect
@@ -680,14 +685,17 @@ export default function Home() {
               ) : currentStep === 3 ? (
                 <button
                   onClick={handleSubmit}
-                  disabled={!formData.phoneNumber}
-                  className={`px-8 py-3 text-sm font-light transition-colors duration-200 ${
-                    !formData.phoneNumber
+                  disabled={!formData.phoneNumber || isCreatingOrder}
+                  className={`px-8 py-3 text-sm font-light transition-colors duration-200 flex items-center space-x-2 ${
+                    !formData.phoneNumber || isCreatingOrder
                       ? "text-gray-400 bg-gray-200 dark:bg-gray-700 cursor-not-allowed"
                       : "text-white bg-black dark:bg-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200"
                   }`}
                 >
-                  Proceed to Pay
+                  {isCreatingOrder && (
+                    <div className="animate-spin w-4 h-4 border-2 border-gray-400 border-t-transparent rounded-full"></div>
+                  )}
+                  <span>{isCreatingOrder ? "Creating Order..." : "Proceed to Pay"}</span>
                 </button>
               ) : (
                 <div className="text-sm text-gray-600 dark:text-gray-400">
