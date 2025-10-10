@@ -1,3 +1,5 @@
+import { Globe, Zap, Palette } from "lucide-react";
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-white dark:bg-black relative overflow-hidden">
@@ -13,7 +15,7 @@ export default function Home() {
           style={{ animationDuration: "2s" }}
         ></div>
         <div
-          className="absolute bottom-27 left-1/4 w-16 h-16 bg-gray-800 dark:bg-gray-200 rounded-full opacity-65 animate-pulse"
+          className="absolute bottom-20 left-1/4 w-16 h-16 bg-gray-800 dark:bg-gray-200 rounded-full opacity-65 animate-bounce"
           style={{ animationDelay: "0.5s", animationDuration: "1.5s" }}
         ></div>
         <div
@@ -85,7 +87,9 @@ export default function Home() {
       <div className="max-w-4xl mx-auto px-6 pb-24">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
           <div className="text-center border-2 border-gray-300 dark:border-gray-700 py-8 px-6 hover:border-gray-400 dark:hover:border-gray-600 hover:shadow-lg transition-all duration-500 group">
-            <div className="text-2xl mb-4">🇳🇬</div>
+            <div className="mb-4 flex justify-center">
+              <Globe className="w-8 h-8 text-gray-600 dark:text-gray-400" />
+            </div>
             <h3 className="text-lg font-light text-black dark:text-white mb-2">
               Naira Support
             </h3>
@@ -95,7 +99,9 @@ export default function Home() {
           </div>
 
           <div className="text-center border-2 border-gray-300 dark:border-gray-700 py-8 px-6 hover:border-gray-400 dark:hover:border-gray-600 hover:shadow-lg transition-all duration-500 group">
-            <div className="text-2xl mb-4">⚡</div>
+            <div className="mb-4 flex justify-center">
+              <Zap className="w-8 h-8 text-gray-600 dark:text-gray-400" />
+            </div>
             <h3 className="text-lg font-light text-black dark:text-white mb-2">
               Fast & Secure
             </h3>
@@ -105,7 +111,9 @@ export default function Home() {
           </div>
 
           <div className="text-center border-2 border-gray-300 dark:border-gray-700 py-8 px-6 hover:border-gray-400 dark:hover:border-gray-600 hover:shadow-lg transition-all duration-500 group">
-            <div className="text-2xl mb-4">🎨</div>
+            <div className="mb-4 flex justify-center">
+              <Palette className="w-8 h-8 text-gray-600 dark:text-gray-400" />
+            </div>
             <h3 className="text-lg font-light text-black dark:text-white mb-2">
               Zora Ready
             </h3>
