@@ -178,41 +178,41 @@ export default function Home() {
 
       {/* Multi-step Form Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-lg flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg max-w-md w-full max-h-[90vh] overflow-y-auto shadow-lg">
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 p-4">
+          <div className="bg-white dark:bg-black border border-gray-300 dark:border-gray-700 max-w-md w-full">
             {/* Modal Header */}
-            <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
-              <h2 className="text-lg font-light text-black dark:text-white">
-                Fund Zora Account
+            <div className="flex items-center justify-between p-8">
+              <h2 className="text-xl font-light text-black dark:text-white">
+                Fund Zora
               </h2>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200"
+                className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors duration-200"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* Progress Indicator */}
-            <div className="flex items-center justify-center p-6 border-b border-gray-200 dark:border-gray-700">
-              <div className="flex items-center space-x-2">
+            <div className="flex items-center justify-center pb-8">
+              <div className="flex items-center space-x-4">
                 {[1, 2, 3].map((step) => (
                   <div key={step} className="flex items-center">
                     <div
-                      className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-light ${
+                      className={`w-6 h-6 border-2 flex items-center justify-center text-xs font-light ${
                         step <= currentStep
-                          ? "bg-gray-800 dark:bg-gray-200 text-white dark:text-black"
-                          : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400"
+                          ? "border-black dark:border-white text-black dark:text-white"
+                          : "border-gray-300 dark:border-gray-600 text-gray-400 dark:text-gray-500"
                       }`}
                     >
                       {step}
                     </div>
                     {step < 3 && (
                       <div
-                        className={`w-8 h-px ${
+                        className={`w-6 h-px ${
                           step < currentStep
-                            ? "bg-gray-800 dark:bg-gray-200"
-                            : "bg-gray-200 dark:bg-gray-700"
+                            ? "bg-black dark:bg-white"
+                            : "bg-gray-300 dark:bg-gray-600"
                         }`}
                       />
                     )}
@@ -222,12 +222,9 @@ export default function Home() {
             </div>
 
             {/* Form Content */}
-            <div className="p-6 space-y-6">
+            <div className="px-8 pb-8">
               {currentStep === 1 && (
-                <div className="space-y-4">
-                  <h3 className="text-md font-light text-black dark:text-white mb-4">
-                    Account Details
-                  </h3>
+                <div className="space-y-6">
                   <div>
                     <label className="block text-sm font-light text-gray-600 dark:text-gray-400 mb-2">
                       Zora Username
@@ -238,7 +235,7 @@ export default function Home() {
                       value={formData.username}
                       onChange={handleInputChange}
                       placeholder="Enter Zora username"
-                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-sm bg-white dark:bg-gray-800 text-black dark:text-white font-light focus:outline-none focus:border-gray-500 dark:focus:border-gray-400 transition-all duration-200"
+                      className="w-full px-0 py-3 border-0 border-b border-gray-300 dark:border-gray-600 bg-transparent text-black dark:text-white font-light focus:outline-none focus:border-black dark:focus:border-white transition-colors duration-200"
                     />
                   </div>
                   <div>
@@ -251,17 +248,14 @@ export default function Home() {
                       value={formData.amount}
                       onChange={handleInputChange}
                       placeholder="Enter amount in Naira"
-                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-sm bg-white dark:bg-gray-800 text-black dark:text-white font-light focus:outline-none focus:border-gray-500 dark:focus:border-gray-400 transition-all duration-200"
+                      className="w-full px-0 py-3 border-0 border-b border-gray-300 dark:border-gray-600 bg-transparent text-black dark:text-white font-light focus:outline-none focus:border-black dark:focus:border-white transition-colors duration-200"
                     />
                   </div>
                 </div>
               )}
 
               {currentStep === 2 && (
-                <div className="space-y-4">
-                  <h3 className="text-md font-light text-black dark:text-white mb-4">
-                    Contact Information
-                  </h3>
+                <div className="space-y-6">
                   <div>
                     <label className="block text-sm font-light text-gray-600 dark:text-gray-400 mb-2">
                       Email Address
@@ -272,7 +266,7 @@ export default function Home() {
                       value={formData.email}
                       onChange={handleInputChange}
                       placeholder="Enter your email"
-                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-sm bg-white dark:bg-gray-800 text-black dark:text-white font-light focus:outline-none focus:border-gray-500 dark:focus:border-gray-400 transition-all duration-200"
+                      className="w-full px-0 py-3 border-0 border-b border-gray-300 dark:border-gray-600 bg-transparent text-black dark:text-white font-light focus:outline-none focus:border-black dark:focus:border-white transition-colors duration-200"
                     />
                   </div>
                   <div>
@@ -285,17 +279,14 @@ export default function Home() {
                       value={formData.fullName}
                       onChange={handleInputChange}
                       placeholder="Enter your full name"
-                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-sm bg-white dark:bg-gray-800 text-black dark:text-white font-light focus:outline-none focus:border-gray-500 dark:focus:border-gray-400 transition-all duration-200"
+                      className="w-full px-0 py-3 border-0 border-b border-gray-300 dark:border-gray-600 bg-transparent text-black dark:text-white font-light focus:outline-none focus:border-black dark:focus:border-white transition-colors duration-200"
                     />
                   </div>
                 </div>
               )}
 
               {currentStep === 3 && (
-                <div className="space-y-4">
-                  <h3 className="text-md font-light text-black dark:text-white mb-4">
-                    Phone Number
-                  </h3>
+                <div className="space-y-6">
                   <div>
                     <label className="block text-sm font-light text-gray-600 dark:text-gray-400 mb-2">
                       Phone Number
@@ -306,14 +297,14 @@ export default function Home() {
                       value={formData.phoneNumber}
                       onChange={handleInputChange}
                       placeholder="Enter your phone number"
-                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-sm bg-white dark:bg-gray-800 text-black dark:text-white font-light focus:outline-none focus:border-gray-500 dark:focus:border-gray-400 transition-all duration-200"
+                      className="w-full px-0 py-3 border-0 border-b border-gray-300 dark:border-gray-600 bg-transparent text-black dark:text-white font-light focus:outline-none focus:border-black dark:focus:border-white transition-colors duration-200"
                     />
                   </div>
                   
                   {/* Summary */}
-                  <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-sm">
-                    <h4 className="text-sm font-light text-black dark:text-white mb-3">Summary</h4>
-                    <div className="text-xs text-gray-600 dark:text-gray-400 space-y-2">
+                  <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+                    <h4 className="text-sm font-light text-black dark:text-white mb-4">Summary</h4>
+                    <div className="text-sm text-gray-600 dark:text-gray-400 space-y-2">
                       <p>Username: {formData.username}</p>
                       <p>Amount: ₦{formData.amount}</p>
                       <p>Email: {formData.email}</p>
@@ -326,14 +317,14 @@ export default function Home() {
             </div>
 
             {/* Modal Footer */}
-            <div className="flex items-center justify-between p-6 border-t border-gray-200 dark:border-gray-700">
+            <div className="flex items-center justify-between p-8 border-t border-gray-200 dark:border-gray-700">
               <button
                 onClick={prevStep}
                 disabled={currentStep === 1}
-                className={`flex items-center space-x-2 px-4 py-2 text-sm font-light transition-colors duration-300 ${
+                className={`flex items-center space-x-2 text-sm font-light transition-colors duration-200 ${
                   currentStep === 1
                     ? "text-gray-400 cursor-not-allowed"
-                    : "text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+                    : "text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white"
                 }`}
               >
                 <ChevronLeft className="w-4 h-4" />
@@ -343,7 +334,7 @@ export default function Home() {
               {currentStep < 3 ? (
                 <button
                   onClick={nextStep}
-                  className="flex items-center space-x-2 px-4 py-2 text-sm font-light text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-colors duration-300"
+                  className="flex items-center space-x-2 text-sm font-light text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors duration-200"
                 >
                   <span>Next</span>
                   <ChevronRight className="w-4 h-4" />
@@ -351,7 +342,7 @@ export default function Home() {
               ) : (
                 <button
                   onClick={handleSubmit}
-                  className="px-6 py-2 text-sm font-light text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-300"
+                  className="px-8 py-3 text-sm font-light text-white bg-black dark:bg-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors duration-200"
                 >
                   Fund Account
                 </button>
