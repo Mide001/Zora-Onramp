@@ -32,6 +32,8 @@ export default function Home() {
   const [showSummary, setShowSummary] = useState(false);
   const [paymentData, setPaymentData] = useState<PaymentData | null>(null);
   const [timeLeft, setTimeLeft] = useState(900); // 15 minutes in seconds
+  const [paymentStatus, setPaymentStatus] = useState<'pending' | 'processing' | 'completed' | 'failed'>('pending');
+  const [usdcTxHash, setUsdcTxHash] = useState<string>("");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -48,7 +50,7 @@ export default function Home() {
 
     setIsValidatingUsername(true);
     try {
-      const response = await fetch('http://localhost:3002/api/validate-zora-username', {
+      const response = await fetch('https://443abf085a8b.ngrok-free.app/api/validate-zora-username', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -106,7 +108,7 @@ export default function Home() {
   const handleSubmit = async () => {
     try {
       // Call backend to create order
-      const response = await fetch('http://localhost:3002/api/orders/create', {
+      const response = await fetch('https://443abf085a8b.ngrok-free.app/api/orders/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -147,6 +149,8 @@ export default function Home() {
     setShowSummary(false);
     setPaymentData(null);
     setTimeLeft(900);
+    setPaymentStatus('pending');
+    setUsdcTxHash("");
   };
 
   // Countdown timer effect
@@ -159,10 +163,41 @@ export default function Home() {
     }
   }, [currentStep, timeLeft]);
 
+  // Payment status polling effect
+  useEffect(() => {
+    if (currentStep === 4 && paymentData && paymentStatus === 'pending') {
+      const interval = setInterval(() => {
+        checkPaymentStatus(paymentData.orderId);
+      }, 5000); // Check every 5 seconds
+
+      return () => clearInterval(interval);
+    }
+  }, [currentStep, paymentData, paymentStatus]);
+
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
     return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+  };
+
+  const checkPaymentStatus = async (orderId: string) => {
+    try {
+      const response = await fetch(`https://443abf085a8b.ngrok-free.app/api/orders/${orderId}`);
+      const data = await response.json();
+      
+      if (data.success && data.order) {
+        if (data.order.status === 'completed') {
+          setPaymentStatus('completed');
+          setUsdcTxHash(data.order.usdcTxHash || '');
+        } else if (data.order.status === 'failed') {
+          setPaymentStatus('failed');
+        } else if (data.order.status === 'processing') {
+          setPaymentStatus('processing');
+        }
+      }
+    } catch (error) {
+      console.error('Error checking payment status:', error);
+    }
   };
   return (
     <div className="min-h-screen bg-white dark:bg-black relative overflow-hidden">
@@ -454,61 +489,125 @@ export default function Home() {
 
               {currentStep === 4 && paymentData && (
                 <div className="space-y-6">
-                  <div className="text-center">
-                    <h3 className="text-lg font-light text-black dark:text-white mb-2">
-                      Payment Details
-                    </h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                      Transfer the exact amount to the account below
-                    </p>
-                  </div>
+                  {paymentStatus === 'pending' && (
+                    <>
+                      <div className="text-center">
+                        <h3 className="text-lg font-light text-black dark:text-white mb-2">
+                          Payment Details
+                        </h3>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                          Transfer the exact amount to the account below
+                        </p>
+                      </div>
 
-                  {/* Countdown Timer */}
-                  <div className="text-center p-4 border border-gray-300 dark:border-gray-600">
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Time remaining</p>
-                    <p className="text-lg font-light text-black dark:text-white">
-                      {formatTime(timeLeft)}
-                    </p>
-                  </div>
+                      {/* Countdown Timer */}
+                      <div className="text-center p-4 border border-gray-300 dark:border-gray-600">
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Time remaining</p>
+                        <p className="text-lg font-light text-black dark:text-white">
+                          {formatTime(timeLeft)}
+                        </p>
+                      </div>
 
-                  {/* Payment Details */}
-                  <div className="space-y-4">
-                    <div className="p-4 border border-gray-300 dark:border-gray-600">
-                      <h4 className="text-sm font-light text-black dark:text-white mb-3">Account Details</h4>
-                      <div className="space-y-2 text-sm">
-                        <div className="flex justify-between">
-                          <span className="text-gray-600 dark:text-gray-400">Account Number:</span>
-                          <span className="font-light text-black dark:text-white">{paymentData.virtualAccount.accountNumber}</span>
+                      {/* Payment Details */}
+                      <div className="space-y-4">
+                        <div className="p-4 border border-gray-300 dark:border-gray-600">
+                          <h4 className="text-sm font-light text-black dark:text-white mb-3">Account Details</h4>
+                          <div className="space-y-2 text-sm">
+                            <div className="flex justify-between">
+                              <span className="text-gray-600 dark:text-gray-400">Account Number:</span>
+                              <span className="font-light text-black dark:text-white">{paymentData.virtualAccount.accountNumber}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-gray-600 dark:text-gray-400">Bank Name:</span>
+                              <span className="font-light text-black dark:text-white">{paymentData.virtualAccount.bankName}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-gray-600 dark:text-gray-400">Amount:</span>
+                              <span className="font-light text-black dark:text-white">₦{formData.amount}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-gray-600 dark:text-gray-400">USDC Amount:</span>
+                              <span className="font-light text-black dark:text-white">{paymentData.usdcAmount} USDC</span>
+                            </div>
+                          </div>
                         </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600 dark:text-gray-400">Bank Name:</span>
-                          <span className="font-light text-black dark:text-white">{paymentData.virtualAccount.bankName}</span>
+
+                        <div className="p-4 border border-gray-300 dark:border-gray-600">
+                          <h4 className="text-sm font-light text-black dark:text-white mb-3">Order Information</h4>
+                          <div className="space-y-2 text-sm">
+                            <div className="flex justify-between">
+                              <span className="text-gray-600 dark:text-gray-400">Order ID:</span>
+                              <span className="font-light text-black dark:text-white font-mono text-xs">{paymentData.orderId}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-gray-600 dark:text-gray-400">Reference:</span>
+                              <span className="font-light text-black dark:text-white font-mono text-xs">{paymentData.virtualAccount.reference}</span>
+                            </div>
+                          </div>
                         </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600 dark:text-gray-400">Amount:</span>
-                          <span className="font-light text-black dark:text-white">₦{formData.amount}</span>
+                      </div>
+                    </>
+                  )}
+
+                  {paymentStatus === 'processing' && (
+                    <div className="text-center space-y-4">
+                      <div className="animate-spin w-8 h-8 border-2 border-gray-300 border-t-black dark:border-t-white mx-auto"></div>
+                      <h3 className="text-lg font-light text-black dark:text-white">
+                        Processing Payment
+                      </h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                        We're confirming your payment and preparing to release your USDC...
+                      </p>
+                    </div>
+                  )}
+
+                  {paymentStatus === 'completed' && (
+                    <div className="text-center space-y-4">
+                      <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto">
+                        <Check className="w-8 h-8 text-green-600 dark:text-green-400" />
+                      </div>
+                      <h3 className="text-lg font-light text-black dark:text-white">
+                        Payment Successful!
+                      </h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                        Your USDC has been released to your Zora address
+                      </p>
+                      {usdcTxHash && (
+                        <div className="p-4 border border-gray-300 dark:border-gray-600">
+                          <h4 className="text-sm font-light text-black dark:text-white mb-2">Transaction Hash</h4>
+                          <p className="text-xs font-mono text-gray-600 dark:text-gray-400 break-all">
+                            {usdcTxHash}
+                          </p>
                         </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600 dark:text-gray-400">USDC Amount:</span>
-                          <span className="font-light text-black dark:text-white">{paymentData.usdcAmount} USDC</span>
+                      )}
+                      <div className="p-4 border border-gray-300 dark:border-gray-600">
+                        <div className="space-y-2 text-sm">
+                          <div className="flex justify-between">
+                            <span className="text-gray-600 dark:text-gray-400">Amount Received:</span>
+                            <span className="font-light text-black dark:text-white">{paymentData.usdcAmount} USDC</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-600 dark:text-gray-400">Zora Address:</span>
+                            <span className="font-light text-black dark:text-white font-mono text-xs">{zoraAddress}</span>
+                          </div>
                         </div>
                       </div>
                     </div>
+                  )}
 
-                    <div className="p-4 border border-gray-300 dark:border-gray-600">
-                      <h4 className="text-sm font-light text-black dark:text-white mb-3">Order Information</h4>
-                      <div className="space-y-2 text-sm">
-                        <div className="flex justify-between">
-                          <span className="text-gray-600 dark:text-gray-400">Order ID:</span>
-                          <span className="font-light text-black dark:text-white font-mono text-xs">{paymentData.orderId}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600 dark:text-gray-400">Reference:</span>
-                          <span className="font-light text-black dark:text-white font-mono text-xs">{paymentData.virtualAccount.reference}</span>
-                        </div>
+                  {paymentStatus === 'failed' && (
+                    <div className="text-center space-y-4">
+                      <div className="w-16 h-16 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center mx-auto">
+                        <X className="w-8 h-8 text-red-600 dark:text-red-400" />
                       </div>
+                      <h3 className="text-lg font-light text-black dark:text-white">
+                        Payment Failed
+                      </h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                        There was an issue processing your payment. Please try again.
+                      </p>
                     </div>
-                  </div>
+                  )}
                 </div>
               )}
             </div>
@@ -559,7 +658,10 @@ export default function Home() {
                 </button>
               ) : (
                 <div className="text-sm text-gray-600 dark:text-gray-400">
-                  Complete payment to receive USDC
+                  {paymentStatus === 'pending' && "Complete payment to receive USDC"}
+                  {paymentStatus === 'processing' && "Processing your payment..."}
+                  {paymentStatus === 'completed' && "Payment completed successfully!"}
+                  {paymentStatus === 'failed' && "Payment failed - please try again"}
                 </div>
               )}
             </div>
