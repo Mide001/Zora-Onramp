@@ -1,5 +1,5 @@
 "use client";
-import { Globe, Zap, Palette, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { Globe, Zap, Palette, X, ChevronLeft, ChevronRight, Check } from "lucide-react";
 import { useState } from "react";
 
 export default function Home() {
@@ -12,6 +12,8 @@ export default function Home() {
     fullName: "",
     phoneNumber: ""
   });
+  const [isValidatingUsername, setIsValidatingUsername] = useState(false);
+  const [isUsernameValid, setIsUsernameValid] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -20,11 +22,50 @@ export default function Home() {
     });
   };
 
+  const validateZoraUsername = async (username: string) => {
+    if (!username) {
+      setIsUsernameValid(false);
+      return;
+    }
+
+    setIsValidatingUsername(true);
+    try {
+      const response = await fetch('/api/validate-zora-username', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username }),
+      });
+      
+      const data = await response.json();
+      setIsUsernameValid(data.isValid);
+    } catch (error) {
+      console.error('Error validating username:', error);
+      setIsUsernameValid(false);
+    } finally {
+      setIsValidatingUsername(false);
+    }
+  };
+
+  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const username = e.target.value;
+    setFormData({
+      ...formData,
+      username
+    });
+    
+    // Debounce validation
+    setTimeout(() => {
+      validateZoraUsername(username);
+    }, 500);
+  };
+
   const nextStep = () => {
     if (currentStep < 3) {
       // Validate current step before proceeding
       if (currentStep === 1) {
-        if (!formData.username || !formData.amount) return;
+        if (!formData.username || !formData.amount || !isUsernameValid) return;
       } else if (currentStep === 2) {
         if (!formData.email || !formData.fullName) return;
       }
@@ -237,14 +278,26 @@ export default function Home() {
                     <label className="block text-sm font-light text-gray-600 dark:text-gray-400 mb-2">
                       Zora Username
                     </label>
-                    <input
-                      type="text"
-                      name="username"
-                      value={formData.username}
-                      onChange={handleInputChange}
-                      placeholder="Enter Zora username"
-                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-transparent text-black dark:text-white font-light focus:outline-none focus:border-black dark:focus:border-white transition-colors duration-200"
-                    />
+                    <div className="relative">
+                      <input
+                        type="text"
+                        name="username"
+                        value={formData.username}
+                        onChange={handleUsernameChange}
+                        placeholder="Enter Zora username"
+                        className="w-full px-4 py-3 pr-10 border border-gray-300 dark:border-gray-600 bg-transparent text-black dark:text-white font-light focus:outline-none focus:border-black dark:focus:border-white transition-colors duration-200"
+                      />
+                      {isValidatingUsername && (
+                        <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                          <div className="w-4 h-4 border-2 border-gray-300 border-t-black dark:border-t-white rounded-full animate-spin"></div>
+                        </div>
+                      )}
+                      {!isValidatingUsername && isUsernameValid && (
+                        <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                          <Check className="w-4 h-4 text-green-500" />
+                        </div>
+                      )}
+                    </div>
                   </div>
                   <div>
                     <label className="block text-sm font-light text-gray-600 dark:text-gray-400 mb-2">
@@ -343,11 +396,11 @@ export default function Home() {
                 <button
                   onClick={nextStep}
                   disabled={
-                    (currentStep === 1 && (!formData.username || !formData.amount)) ||
+                    (currentStep === 1 && (!formData.username || !formData.amount || !isUsernameValid)) ||
                     (currentStep === 2 && (!formData.email || !formData.fullName))
                   }
                   className={`flex items-center space-x-2 text-sm font-light transition-colors duration-200 ${
-                    (currentStep === 1 && (!formData.username || !formData.amount)) ||
+                    (currentStep === 1 && (!formData.username || !formData.amount || !isUsernameValid)) ||
                     (currentStep === 2 && (!formData.email || !formData.fullName))
                       ? "text-gray-400 cursor-not-allowed"
                       : "text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white"
