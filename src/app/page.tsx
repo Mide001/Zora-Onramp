@@ -23,7 +23,7 @@ export default function Home() {
 
         {/* Additional Moving Elements */}
         <div
-          className="absolute top-1/2 left-1/3 w-12 h-12 bg-gray-700 dark:bg-gray-300 rounded-full opacity-55 animate-pulse"
+          className="absolute top-1/2 right-10 w-12 h-12 bg-gray-700 dark:bg-gray-300 rounded-full opacity-55 animate-pulse"
           style={{ animationDuration: "3s", animationDelay: "1.5s" }}
         ></div>
         <div
