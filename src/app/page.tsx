@@ -50,7 +50,7 @@ export default function Home() {
 
     setIsValidatingUsername(true);
     try {
-      const response = await fetch('https://443abf085a8b.ngrok-free.app/api/validate-zora-username', {
+      const response = await fetch('https://f7d8ecdc1a89.ngrok-free.app/api/validate-zora-username', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -108,7 +108,7 @@ export default function Home() {
   const handleSubmit = async () => {
     try {
       // Call backend to create order
-      const response = await fetch('https://443abf085a8b.ngrok-free.app/api/orders/create', {
+      const response = await fetch('https://f7d8ecdc1a89.ngrok-free.app/api/orders/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -182,7 +182,7 @@ export default function Home() {
 
   const checkPaymentStatus = async (orderId: string) => {
     try {
-      const response = await fetch(`https://443abf085a8b.ngrok-free.app/api/orders/${orderId}`);
+      const response = await fetch(`https://f7d8ecdc1a89.ngrok-free.app/api/orders/${orderId}`);
       const data = await response.json();
       
       if (data.success && data.order) {
