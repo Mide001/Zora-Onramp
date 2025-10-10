@@ -1,6 +1,6 @@
 "use client";
 import { Globe, Zap, Palette, X, ChevronLeft, ChevronRight, Check } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,6 +15,8 @@ export default function Home() {
   const [isValidatingUsername, setIsValidatingUsername] = useState(false);
   const [isUsernameValid, setIsUsernameValid] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
+  const [paymentData, setPaymentData] = useState(null);
+  const [timeLeft, setTimeLeft] = useState(900); // 15 minutes in seconds
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -83,9 +85,35 @@ export default function Home() {
     if (currentStep > 1) setCurrentStep(currentStep - 1);
   };
 
-  const handleSubmit = () => {
-    // Handle form submission
-    console.log("Form submitted:", formData);
+  const handleSubmit = async () => {
+    try {
+      // Call backend to create order
+      const response = await fetch('http://localhost:3002/api/orders/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          address: formData.username, // This should be the Zora address from validation
+          amountNGN: parseFloat(formData.amount),
+          email: formData.email,
+          fullName: formData.fullName,
+          phone: formData.phoneNumber
+        }),
+      });
+      
+      const data = await response.json();
+      if (data.success) {
+        setPaymentData(data.order);
+        setCurrentStep(4); // Move to payment step
+        setTimeLeft(900); // Reset countdown
+      }
+    } catch (error) {
+      console.error('Error creating order:', error);
+    }
+  };
+
+  const handleCloseModal = () => {
     setIsModalOpen(false);
     setCurrentStep(1);
     setFormData({
@@ -98,6 +126,24 @@ export default function Home() {
     setIsUsernameValid(false);
     setIsValidatingUsername(false);
     setShowSummary(false);
+    setPaymentData(null);
+    setTimeLeft(900);
+  };
+
+  // Countdown timer effect
+  useEffect(() => {
+    if (currentStep === 4 && timeLeft > 0) {
+      const timer = setTimeout(() => {
+        setTimeLeft(timeLeft - 1);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [currentStep, timeLeft]);
+
+  const formatTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
   };
   return (
     <div className="min-h-screen bg-white dark:bg-black relative overflow-hidden">
@@ -244,7 +290,7 @@ export default function Home() {
                 Fund Zora
               </h2>
               <button
-                onClick={() => setIsModalOpen(false)}
+                onClick={handleCloseModal}
                 className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors duration-200"
               >
                 <X className="w-5 h-5" />
@@ -254,7 +300,7 @@ export default function Home() {
             {/* Progress Indicator */}
             <div className="flex items-center justify-center pb-8">
               <div className="flex items-center space-x-4">
-                {[1, 2, 3].map((step) => (
+                {[1, 2, 3, 4].map((step) => (
                   <div key={step} className="flex items-center">
                     <div
                       className={`w-6 h-6 border-2 flex items-center justify-center text-xs font-light ${
@@ -265,7 +311,7 @@ export default function Home() {
                     >
                       {step}
                     </div>
-                    {step < 3 && (
+                    {step < 4 && (
                       <div
                         className={`w-6 h-px ${
                           step < currentStep
@@ -386,6 +432,66 @@ export default function Home() {
                   )}
                 </div>
               )}
+
+              {currentStep === 4 && paymentData && (
+                <div className="space-y-6">
+                  <div className="text-center">
+                    <h3 className="text-lg font-light text-black dark:text-white mb-2">
+                      Payment Details
+                    </h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                      Transfer the exact amount to the account below
+                    </p>
+                  </div>
+
+                  {/* Countdown Timer */}
+                  <div className="text-center p-4 border border-gray-300 dark:border-gray-600">
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Time remaining</p>
+                    <p className="text-lg font-light text-black dark:text-white">
+                      {formatTime(timeLeft)}
+                    </p>
+                  </div>
+
+                  {/* Payment Details */}
+                  <div className="space-y-4">
+                    <div className="p-4 border border-gray-300 dark:border-gray-600">
+                      <h4 className="text-sm font-light text-black dark:text-white mb-3">Account Details</h4>
+                      <div className="space-y-2 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-gray-600 dark:text-gray-400">Account Number:</span>
+                          <span className="font-light text-black dark:text-white">{paymentData.virtualAccount.accountNumber}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600 dark:text-gray-400">Bank Name:</span>
+                          <span className="font-light text-black dark:text-white">{paymentData.virtualAccount.bankName}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600 dark:text-gray-400">Amount:</span>
+                          <span className="font-light text-black dark:text-white">₦{formData.amount}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600 dark:text-gray-400">USDC Amount:</span>
+                          <span className="font-light text-black dark:text-white">{paymentData.usdcAmount} USDC</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="p-4 border border-gray-300 dark:border-gray-600">
+                      <h4 className="text-sm font-light text-black dark:text-white mb-3">Order Information</h4>
+                      <div className="space-y-2 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-gray-600 dark:text-gray-400">Order ID:</span>
+                          <span className="font-light text-black dark:text-white font-mono text-xs">{paymentData.orderId}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600 dark:text-gray-400">Reference:</span>
+                          <span className="font-light text-black dark:text-white font-mono text-xs">{paymentData.virtualAccount.reference}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Modal Footer */}
@@ -420,7 +526,7 @@ export default function Home() {
                   <span>Next</span>
                   <ChevronRight className="w-4 h-4" />
                 </button>
-              ) : (
+              ) : currentStep === 3 ? (
                 <button
                   onClick={handleSubmit}
                   disabled={!formData.phoneNumber}
@@ -430,8 +536,12 @@ export default function Home() {
                       : "text-white bg-black dark:bg-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200"
                   }`}
                 >
-                  Fund Account
+                  Proceed to Pay
                 </button>
+              ) : (
+                <div className="text-sm text-gray-600 dark:text-gray-400">
+                  Complete payment to receive USDC
+                </div>
               )}
             </div>
           </div>
