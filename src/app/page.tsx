@@ -54,9 +54,9 @@ export default function Home() {
       {/* Features */}
       <div className="max-w-4xl mx-auto px-6 pb-24">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
-          <div className="text-center border-2 border-gray-300 dark:border-gray-700 py-8 px-6 hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-lg hover:shadow-blue-200/50 dark:hover:shadow-blue-800/50 hover:-translate-y-2 transition-all duration-500 group animate-pulse" style={{animationDuration: '4s', animationDelay: '0.5s'}}>
+          <div className="text-center border-2 border-gray-300 dark:border-gray-700 py-8 px-6 hover:border-gray-400 dark:hover:border-gray-600 hover:shadow-lg hover:-translate-y-2 transition-all duration-500 group animate-pulse" style={{animationDuration: '4s', animationDelay: '0.5s'}}>
             <div className="text-2xl mb-4 group-hover:scale-125 group-hover:rotate-12 transition-all duration-500 animate-bounce" style={{animationDuration: '2s'}}>🇳🇬</div>
-            <h3 className="text-lg font-light text-black dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+            <h3 className="text-lg font-light text-black dark:text-white mb-2">
               Naira Support
             </h3>
             <p className="text-sm text-gray-600 dark:text-gray-400 font-light leading-relaxed">
@@ -64,9 +64,9 @@ export default function Home() {
             </p>
           </div>
           
-          <div className="text-center border-2 border-gray-300 dark:border-gray-700 py-8 px-6 hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-lg hover:shadow-blue-200/50 dark:hover:shadow-blue-800/50 hover:-translate-y-2 transition-all duration-500 group animate-pulse" style={{animationDuration: '4s', animationDelay: '1s'}}>
+          <div className="text-center border-2 border-gray-300 dark:border-gray-700 py-8 px-6 hover:border-gray-400 dark:hover:border-gray-600 hover:shadow-lg hover:-translate-y-2 transition-all duration-500 group animate-pulse" style={{animationDuration: '4s', animationDelay: '1s'}}>
             <div className="text-2xl mb-4 group-hover:scale-125 group-hover:rotate-12 transition-all duration-500 animate-bounce" style={{animationDuration: '2.5s'}}>⚡</div>
-            <h3 className="text-lg font-light text-black dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+            <h3 className="text-lg font-light text-black dark:text-white mb-2">
               Fast & Secure
             </h3>
             <p className="text-sm text-gray-600 dark:text-gray-400 font-light leading-relaxed">
@@ -74,9 +74,9 @@ export default function Home() {
             </p>
           </div>
           
-          <div className="text-center border-2 border-gray-300 dark:border-gray-700 py-8 px-6 hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-lg hover:shadow-blue-200/50 dark:hover:shadow-blue-800/50 hover:-translate-y-2 transition-all duration-500 group animate-pulse" style={{animationDuration: '4s', animationDelay: '1.5s'}}>
+          <div className="text-center border-2 border-gray-300 dark:border-gray-700 py-8 px-6 hover:border-gray-400 dark:hover:border-gray-600 hover:shadow-lg hover:-translate-y-2 transition-all duration-500 group animate-pulse" style={{animationDuration: '4s', animationDelay: '1.5s'}}>
             <div className="text-2xl mb-4 group-hover:scale-125 group-hover:rotate-12 transition-all duration-500 animate-bounce" style={{animationDuration: '3s'}}>🎨</div>
-            <h3 className="text-lg font-light text-black dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+            <h3 className="text-lg font-light text-black dark:text-white mb-2">
               Zora Ready
             </h3>
             <p className="text-sm text-gray-600 dark:text-gray-400 font-light leading-relaxed">
