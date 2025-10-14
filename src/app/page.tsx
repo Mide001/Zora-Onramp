@@ -202,6 +202,28 @@ export default function Home() {
     }
   }, [currentStep, paymentData, paymentStatus]);
 
+  // Additional polling for processing state - in case backend gets stuck
+  useEffect(() => {
+    if (currentStep === 4 && paymentData && paymentStatus === 'processing') {
+      console.log('Starting additional polling for processing state');
+      const intervalId = setInterval(() => {
+        console.log('Polling while processing...');
+        checkPaymentStatus(paymentData.orderId);
+      }, 5000); // Check every 5 seconds when processing
+
+      // Timeout after 2 minutes of processing
+      const timeoutId = setTimeout(() => {
+        console.log('Processing timeout reached, checking final status');
+        checkPaymentStatus(paymentData.orderId);
+      }, 120000); // 2 minutes timeout
+
+      return () => {
+        clearInterval(intervalId);
+        clearTimeout(timeoutId);
+      };
+    }
+  }, [currentStep, paymentData, paymentStatus]);
+
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
@@ -232,12 +254,15 @@ export default function Home() {
       
       const data = await response.json();
       console.log('Payment status response:', data);
+      console.log('Full order object:', JSON.stringify(data.order, null, 2));
       
       if (data.success && data.order) {
         console.log('Order status check:', {
           status: data.order.status,
           fulfilled: data.order.fulfilled,
-          releaseTxHash: data.order.releaseTxHash
+          releaseTxHash: data.order.releaseTxHash,
+          createTxHash: data.order.createTxHash,
+          recipientAddress: data.order.recipientAddress
         });
         
         console.log('Setting payment status to:', data.order.status);
@@ -662,17 +687,23 @@ export default function Home() {
                     </>
                   )}
 
-                  {paymentStatus === 'processing' && (
-                    <div className="text-center space-y-4">
-                      <div className="animate-spin w-8 h-8 border-2 border-gray-300 border-t-black dark:border-t-white mx-auto"></div>
-                      <h3 className="text-lg font-light text-black dark:text-white">
-                        Processing Payment
-                      </h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
-                        We&apos;re confirming your payment and releasing your USDC...
-                      </p>
-                    </div>
-                  )}
+           {paymentStatus === 'processing' && (
+             <div className="text-center space-y-4">
+               <div className="animate-spin w-8 h-8 border-2 border-gray-300 border-t-black dark:border-t-white mx-auto"></div>
+               <h3 className="text-lg font-light text-black dark:text-white">
+                 Processing Payment
+               </h3>
+               <p className="text-sm text-gray-600 dark:text-gray-400">
+                 We&apos;re confirming your payment and releasing your USDC...
+               </p>
+               <button
+                 onClick={() => paymentData && verifyPaymentManually(paymentData.orderId)}
+                 className="px-4 py-2 text-sm text-blue-600 dark:text-blue-400 border border-blue-300 dark:border-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors duration-200"
+               >
+                 Check Status Manually
+               </button>
+             </div>
+           )}
 
                   {paymentStatus === 'completed' && (
                     <div className="text-center space-y-4">
