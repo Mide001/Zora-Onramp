@@ -237,7 +237,7 @@ export default function Home() {
         console.log('Order status check:', {
           status: data.order.status,
           fulfilled: data.order.fulfilled,
-          txHash: data.order.txHash
+          releaseTxHash: data.order.releaseTxHash
         });
         
         console.log('Setting payment status to:', data.order.status);
@@ -245,7 +245,7 @@ export default function Home() {
         if (data.order.status === 'completed') {
           console.log('Status is completed, setting to completed');
           setPaymentStatus('completed');
-          setUsdcTxHash(data.order.txHash || '');
+          setUsdcTxHash(data.order.releaseTxHash || '');
         } else if (data.order.status === 'failed') {
           console.log('Status is failed, setting to failed');
           setPaymentStatus('failed');
@@ -287,7 +287,7 @@ export default function Home() {
       if (data.success && data.order) {
         if (data.order.status === 'completed') {
           setPaymentStatus('completed');
-          setUsdcTxHash(data.order.txHash || '');
+          setUsdcTxHash(data.order.releaseTxHash || '');
         } else if (data.order.status === 'failed') {
           setPaymentStatus('failed');
         } else if (data.order.status === 'confirmed') {
