@@ -36,8 +36,6 @@ export default function Home() {
   const [paymentStatus, setPaymentStatus] = useState<'pending' | 'processing' | 'completed' | 'failed'>('pending');
   const [usdcTxHash, setUsdcTxHash] = useState<string>("");
   const [isCreatingOrder, setIsCreatingOrder] = useState(false);
-  const [pollingStartTime, setPollingStartTime] = useState<number | null>(null);
-  const [timeUntilPolling, setTimeUntilPolling] = useState<number>(0);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -150,7 +148,6 @@ export default function Home() {
         setPaymentData(data.order);
         setCurrentStep(4); // Move to payment step
         setTimeLeft(900); // Reset countdown
-        setPollingStartTime(Date.now() + 10000); // Set when polling will start (10 seconds from now)
       }
     } catch (error) {
       console.error('Error creating order:', error);
@@ -178,8 +175,6 @@ export default function Home() {
     setPaymentStatus('pending');
     setUsdcTxHash("");
     setIsCreatingOrder(false);
-    setPollingStartTime(null);
-    setTimeUntilPolling(0);
   };
 
   // Countdown timer effect
@@ -192,39 +187,17 @@ export default function Home() {
     }
   }, [currentStep, timeLeft]);
 
-  // Polling countdown effect
-  useEffect(() => {
-    if (pollingStartTime && currentStep === 4 && paymentStatus === 'pending') {
-      const updateCountdown = () => {
-        const now = Date.now();
-        const timeLeft = Math.max(0, Math.ceil((pollingStartTime - now) / 1000));
-        setTimeUntilPolling(timeLeft);
-      };
 
-      updateCountdown();
-      const interval = setInterval(updateCountdown, 1000);
-
-      return () => clearInterval(interval);
-    }
-  }, [pollingStartTime, currentStep, paymentStatus]);
-
-  // Payment status polling effect
+  // Payment status polling effect - start immediately and silently
   useEffect(() => {
     if (currentStep === 4 && paymentData && paymentStatus === 'pending') {
-      let intervalId: NodeJS.Timeout;
-      
-      // Wait 10 seconds before starting to poll (give user time to make payment)
-      const initialDelay = setTimeout(() => {
-        intervalId = setInterval(() => {
-          checkPaymentStatus(paymentData.orderId);
-        }, 5000); // Check every 5 seconds
-      }, 10000);
+      // Start polling immediately, no delay
+      const intervalId = setInterval(() => {
+        checkPaymentStatus(paymentData.orderId);
+      }, 3000); // Check every 3 seconds
 
       return () => {
-        clearTimeout(initialDelay);
-        if (intervalId) {
-          clearInterval(intervalId);
-        }
+        clearInterval(intervalId);
       };
     }
   }, [currentStep, paymentData, paymentStatus]);
@@ -608,8 +581,8 @@ export default function Home() {
 
               {currentStep === 4 && paymentData && (
                 <div className="space-y-6">
-                  {/* Always show payment details for pending and processing states */}
-                  {(paymentStatus === 'pending' || paymentStatus === 'processing') && (
+                  {/* Show payment details for pending state, success/failure for others */}
+                  {paymentStatus === 'pending' && (
                     <>
                       <div className="text-center">
                         <h3 className="text-lg font-light text-black dark:text-white mb-2">
@@ -627,15 +600,6 @@ export default function Home() {
                           {formatTime(timeLeft)}
                         </p>
                       </div>
-
-                      {/* Polling Status */}
-                      {timeUntilPolling > 0 && (
-                        <div className="text-center p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded">
-                          <p className="text-sm text-blue-600 dark:text-blue-400">
-                            Payment monitoring will start in {timeUntilPolling} seconds
-                          </p>
-                        </div>
-                      )}
 
                       {/* Payment Details */}
                       <div className="space-y-4">
@@ -676,26 +640,18 @@ export default function Home() {
                         </div>
                       </div>
 
-                      {/* Processing indicator below payment details */}
-                      {paymentStatus === 'processing' && (
-                        <div className="text-center space-y-3 p-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded">
-                          <div className="animate-spin w-6 h-6 border-2 border-gray-300 border-t-black dark:border-t-white mx-auto"></div>
-                          <div>
-                            <p className="text-sm font-light text-black dark:text-white">
-                              Checking for your payment...
-                            </p>
-                            <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-                              We&apos;re monitoring for your transfer
-                            </p>
-                          </div>
-                          <button
-                            onClick={() => paymentData && verifyPaymentManually(paymentData.orderId)}
-                            className="px-3 py-1 text-xs text-blue-600 dark:text-blue-400 border border-blue-300 dark:border-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors duration-200"
-                          >
-                            Check Now
-                          </button>
-                        </div>
-                      )}
+                      {/* Silent monitoring indicator */}
+                      <div className="text-center p-3 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded">
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          We&apos;re monitoring your payment automatically
+                        </p>
+                        <button
+                          onClick={() => paymentData && verifyPaymentManually(paymentData.orderId)}
+                          className="mt-2 px-3 py-1 text-xs text-blue-600 dark:text-blue-400 border border-blue-300 dark:border-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors duration-200"
+                        >
+                          Check Now
+                        </button>
+                      </div>
                     </>
                   )}
 
@@ -708,7 +664,7 @@ export default function Home() {
                         Payment Successful!
                       </h3>
                       <p className="text-sm text-gray-600 dark:text-gray-400">
-                        Your USDC has been released to your Zora address
+                        We&apos;ve sent {paymentData.usdcAmount} USDC to your Zora account
                       </p>
                       {usdcTxHash && (
                         <div className="p-4 border border-gray-300 dark:border-gray-600">
@@ -721,7 +677,7 @@ export default function Home() {
                       <div className="p-4 border border-gray-300 dark:border-gray-600">
                         <div className="space-y-2 text-sm">
                           <div className="flex justify-between">
-                            <span className="text-gray-600 dark:text-gray-400">Amount Received:</span>
+                            <span className="text-gray-600 dark:text-gray-400">Amount Sent:</span>
                             <span className="font-light text-black dark:text-white">{paymentData.usdcAmount} USDC</span>
                           </div>
                           <div className="flex justify-between">
