@@ -368,33 +368,33 @@ export default function Home() {
         ></div>
       </div>
       {/* Hero Section */}
-      <div className="max-w-4xl mx-auto px-6 py-24 sm:py-32">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-16 sm:py-24 md:py-32">
         <div className="text-center">
           {/* Simple Logo */}
-          <div className="mb-12">
+          <div className="mb-8 sm:mb-12">
             <div
-              className="inline-block w-12 h-12 border-2 border-black dark:border-white rounded-sm flex items-center justify-center hover:scale-110 hover:rotate-3 hover:border-blue-500 dark:hover:border-blue-400 transition-all duration-500 animate-pulse"
+              className="inline-block w-10 h-10 sm:w-12 sm:h-12 border-2 border-black dark:border-white rounded-sm flex items-center justify-center hover:scale-110 hover:rotate-3 hover:border-blue-500 dark:hover:border-blue-400 transition-all duration-500 animate-pulse"
               style={{ animationDuration: "3s" }}
             >
-              <span className="text-xl font-light hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-300">
+              <span className="text-lg sm:text-xl font-light hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-300">
                 Z
               </span>
             </div>
           </div>
 
           {/* Main Content */}
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-light tracking-wide text-black dark:text-white mb-6">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light tracking-wide text-black dark:text-white mb-4 sm:mb-6 px-2">
             Zora Onramp
           </h1>
 
-          <p className="text-lg text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto font-light leading-relaxed">
+          <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 mb-8 sm:mb-12 max-w-2xl mx-auto font-light leading-relaxed px-4">
             Convert Nigerian Naira to USDC for the Zora ecosystem
           </p>
 
             {/* Fund Zora Button */}
             <button 
               onClick={() => setIsModalOpen(true)}
-              className="inline-block px-6 py-3 border border-gray-300 dark:border-gray-700 text-sm text-gray-700 dark:text-gray-300 font-light hover:border-gray-400 dark:hover:border-gray-600 transition-colors duration-300"
+              className="inline-block px-6 py-3 sm:px-8 sm:py-4 border border-gray-300 dark:border-gray-700 text-sm sm:text-base text-gray-700 dark:text-gray-300 font-light hover:border-gray-400 dark:hover:border-gray-600 transition-colors duration-300"
             >
               Fund Zora
             </button>
@@ -402,40 +402,40 @@ export default function Home() {
       </div>
 
       {/* Features */}
-      <div className="max-w-4xl mx-auto px-6 pb-24">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
-          <div className="text-center border-2 border-gray-300 dark:border-gray-700 py-8 px-6 hover:border-gray-400 dark:hover:border-gray-600 hover:shadow-lg transition-all duration-500 group">
-            <div className="mb-4 flex justify-center">
-              <Globe className="w-8 h-8 text-gray-600 dark:text-gray-400" />
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 pb-16 sm:pb-24">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 md:gap-12 lg:gap-16">
+          <div className="text-center border-2 border-gray-300 dark:border-gray-700 py-6 sm:py-8 px-4 sm:px-6 hover:border-gray-400 dark:hover:border-gray-600 hover:shadow-lg transition-all duration-500 group">
+            <div className="mb-3 sm:mb-4 flex justify-center">
+              <Globe className="w-6 h-6 sm:w-8 sm:h-8 text-gray-600 dark:text-gray-400" />
             </div>
-            <h3 className="text-lg font-light text-black dark:text-white mb-2">
+            <h3 className="text-base sm:text-lg font-light text-black dark:text-white mb-2">
               Naira Support
             </h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400 font-light leading-relaxed">
+            <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 font-light leading-relaxed">
               Direct conversion from Nigerian Naira to USDC
             </p>
           </div>
 
-          <div className="text-center border-2 border-gray-300 dark:border-gray-700 py-8 px-6 hover:border-gray-400 dark:hover:border-gray-600 hover:shadow-lg transition-all duration-500 group">
-            <div className="mb-4 flex justify-center">
-              <Zap className="w-8 h-8 text-gray-600 dark:text-gray-400" />
+          <div className="text-center border-2 border-gray-300 dark:border-gray-700 py-6 sm:py-8 px-4 sm:px-6 hover:border-gray-400 dark:hover:border-gray-600 hover:shadow-lg transition-all duration-500 group">
+            <div className="mb-3 sm:mb-4 flex justify-center">
+              <Zap className="w-6 h-6 sm:w-8 sm:h-8 text-gray-600 dark:text-gray-400" />
             </div>
-            <h3 className="text-lg font-light text-black dark:text-white mb-2">
+            <h3 className="text-base sm:text-lg font-light text-black dark:text-white mb-2">
               Fast & Secure
             </h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400 font-light leading-relaxed">
+            <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 font-light leading-relaxed">
               Blockchain-powered secure transactions
             </p>
           </div>
 
-          <div className="text-center border-2 border-gray-300 dark:border-gray-700 py-8 px-6 hover:border-gray-400 dark:hover:border-gray-600 hover:shadow-lg transition-all duration-500 group">
-            <div className="mb-4 flex justify-center">
-              <Palette className="w-8 h-8 text-gray-600 dark:text-gray-400" />
+          <div className="text-center border-2 border-gray-300 dark:border-gray-700 py-6 sm:py-8 px-4 sm:px-6 hover:border-gray-400 dark:hover:border-gray-600 hover:shadow-lg transition-all duration-500 group sm:col-span-2 lg:col-span-1">
+            <div className="mb-3 sm:mb-4 flex justify-center">
+              <Palette className="w-6 h-6 sm:w-8 sm:h-8 text-gray-600 dark:text-gray-400" />
             </div>
-            <h3 className="text-lg font-light text-black dark:text-white mb-2">
+            <h3 className="text-base sm:text-lg font-light text-black dark:text-white mb-2">
               Creator Economy
             </h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400 font-light leading-relaxed">
+            <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 font-light leading-relaxed">
               Get USDC to trade tokenized content and support creators on Zora&apos;s decentralized platform
             </p>
           </div>
@@ -453,11 +453,11 @@ export default function Home() {
 
       {/* Multi-step Form Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-black border border-gray-300 dark:border-gray-700 max-w-md w-full">
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 p-2 sm:p-4">
+          <div className="bg-white dark:bg-black border border-gray-300 dark:border-gray-700 max-w-md w-full max-h-[90vh] overflow-y-auto">
             {/* Modal Header */}
-            <div className="flex items-center justify-between p-8">
-              <h2 className="text-xl font-light text-black dark:text-white">
+            <div className="flex items-center justify-between p-4 sm:p-6 md:p-8">
+              <h2 className="text-lg sm:text-xl font-light text-black dark:text-white">
                 Fund Zora
               </h2>
               <button
@@ -469,12 +469,12 @@ export default function Home() {
             </div>
 
             {/* Progress Indicator */}
-            <div className="flex items-center justify-center pb-8">
-              <div className="flex items-center space-x-4">
+            <div className="flex items-center justify-center pb-4 sm:pb-6 md:pb-8">
+              <div className="flex items-center space-x-2 sm:space-x-4">
                 {[1, 2, 3, 4].map((step) => (
                   <div key={step} className="flex items-center">
                     <div
-                      className={`w-6 h-6 border-2 flex items-center justify-center text-xs font-light ${
+                      className={`w-5 h-5 sm:w-6 sm:h-6 border-2 flex items-center justify-center text-xs font-light ${
                         step <= currentStep
                           ? "border-black dark:border-white text-black dark:text-white"
                           : "border-gray-300 dark:border-gray-600 text-gray-400 dark:text-gray-500"
@@ -484,7 +484,7 @@ export default function Home() {
                     </div>
                     {step < 4 && (
                       <div
-                        className={`w-6 h-px ${
+                        className={`w-4 sm:w-6 h-px ${
                           step < currentStep
                             ? "bg-black dark:bg-white"
                             : "bg-gray-300 dark:bg-gray-600"
@@ -497,9 +497,9 @@ export default function Home() {
             </div>
 
             {/* Form Content */}
-            <div className="px-8 pb-8">
+            <div className="px-4 sm:px-6 md:px-8 pb-4 sm:pb-6 md:pb-8">
               {currentStep === 1 && (
-                <div className="space-y-6">
+                <div className="space-y-4 sm:space-y-6">
                   <div>
                     <label className="block text-sm font-light text-gray-600 dark:text-gray-400 mb-2">
                       Zora Username
@@ -511,7 +511,7 @@ export default function Home() {
                         value={formData.username}
                         onChange={handleUsernameChange}
                         placeholder="Enter Zora username"
-                        className="w-full px-4 py-3 pr-10 border border-gray-300 dark:border-gray-600 bg-transparent text-black dark:text-white font-light focus:outline-none focus:border-black dark:focus:border-white transition-colors duration-200"
+                        className="w-full px-3 sm:px-4 py-2 sm:py-3 pr-8 sm:pr-10 border border-gray-300 dark:border-gray-600 bg-transparent text-black dark:text-white font-light focus:outline-none focus:border-black dark:focus:border-white transition-colors duration-200 text-sm sm:text-base"
                       />
                       {isValidatingUsername && (
                         <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
@@ -542,7 +542,7 @@ export default function Home() {
               )}
 
               {currentStep === 2 && (
-                <div className="space-y-6">
+                <div className="space-y-4 sm:space-y-6">
                   <div>
                     <label className="block text-sm font-light text-gray-600 dark:text-gray-400 mb-2">
                       Email Address
@@ -553,7 +553,7 @@ export default function Home() {
                       value={formData.email}
                       onChange={handleInputChange}
                       placeholder="Enter your email"
-                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-transparent text-black dark:text-white font-light focus:outline-none focus:border-black dark:focus:border-white transition-colors duration-200"
+                      className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 dark:border-gray-600 bg-transparent text-black dark:text-white font-light focus:outline-none focus:border-black dark:focus:border-white transition-colors duration-200 text-sm sm:text-base"
                     />
                   </div>
                   <div>
@@ -566,14 +566,14 @@ export default function Home() {
                       value={formData.fullName}
                       onChange={handleInputChange}
                       placeholder="Enter your full name"
-                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-transparent text-black dark:text-white font-light focus:outline-none focus:border-black dark:focus:border-white transition-colors duration-200"
+                      className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 dark:border-gray-600 bg-transparent text-black dark:text-white font-light focus:outline-none focus:border-black dark:focus:border-white transition-colors duration-200 text-sm sm:text-base"
                     />
                   </div>
                 </div>
               )}
 
               {currentStep === 3 && (
-                <div className="space-y-6">
+                <div className="space-y-4 sm:space-y-6">
                   <div>
                     <label className="block text-sm font-light text-gray-600 dark:text-gray-400 mb-2">
                       Phone Number
@@ -584,7 +584,7 @@ export default function Home() {
                       value={formData.phoneNumber}
                       onChange={handleInputChange}
                       placeholder="Enter your phone number"
-                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-transparent text-black dark:text-white font-light focus:outline-none focus:border-black dark:focus:border-white transition-colors duration-200"
+                      className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 dark:border-gray-600 bg-transparent text-black dark:text-white font-light focus:outline-none focus:border-black dark:focus:border-white transition-colors duration-200 text-sm sm:text-base"
                     />
                   </div>
                   
@@ -605,35 +605,35 @@ export default function Home() {
               )}
 
               {currentStep === 4 && paymentData && (
-                <div className="space-y-6">
+                <div className="space-y-4 sm:space-y-6">
                   {/* Show payment details for pending state, success/failure for others */}
                   {paymentStatus === 'pending' && (
                     <>
                       <div className="text-center">
-                        <h3 className="text-lg font-light text-black dark:text-white mb-2">
+                        <h3 className="text-base sm:text-lg font-light text-black dark:text-white mb-2">
                           Payment Details
                         </h3>
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                        <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-4">
                           Transfer the exact amount to the account below
                         </p>
                       </div>
 
                       {/* Countdown Timer */}
-                      <div className="text-center p-4 border border-gray-300 dark:border-gray-600">
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Time remaining</p>
-                        <p className="text-lg font-light text-black dark:text-white">
+                      <div className="text-center p-3 sm:p-4 border border-gray-300 dark:border-gray-600">
+                        <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-1">Time remaining</p>
+                        <p className="text-base sm:text-lg font-light text-black dark:text-white">
                           {formatTime(timeLeft)}
                         </p>
                       </div>
 
                       {/* Payment Details */}
-                      <div className="space-y-4">
-                        <div className="p-4 border border-gray-300 dark:border-gray-600">
-                          <h4 className="text-sm font-light text-black dark:text-white mb-3">Account Details</h4>
-                          <div className="space-y-2 text-sm">
+                      <div className="space-y-3 sm:space-y-4">
+                        <div className="p-3 sm:p-4 border border-gray-300 dark:border-gray-600">
+                          <h4 className="text-xs sm:text-sm font-light text-black dark:text-white mb-2 sm:mb-3">Account Details</h4>
+                          <div className="space-y-1 sm:space-y-2 text-xs sm:text-sm">
                             <div className="flex justify-between">
                               <span className="text-gray-600 dark:text-gray-400">Account Number:</span>
-                              <span className="font-light text-black dark:text-white">{paymentData.virtualAccount.accountNumber}</span>
+                              <span className="font-light text-black dark:text-white break-all">{paymentData.virtualAccount.accountNumber}</span>
                             </div>
                             <div className="flex justify-between">
                               <span className="text-gray-600 dark:text-gray-400">Bank Name:</span>
@@ -650,12 +650,12 @@ export default function Home() {
                           </div>
                         </div>
 
-                        <div className="p-4 border border-gray-300 dark:border-gray-600">
-                          <h4 className="text-sm font-light text-black dark:text-white mb-3">Order Information</h4>
-                          <div className="space-y-2 text-sm">
+                        <div className="p-3 sm:p-4 border border-gray-300 dark:border-gray-600">
+                          <h4 className="text-xs sm:text-sm font-light text-black dark:text-white mb-2 sm:mb-3">Order Information</h4>
+                          <div className="space-y-1 sm:space-y-2 text-xs sm:text-sm">
                             <div className="flex justify-between">
                               <span className="text-gray-600 dark:text-gray-400">Order ID:</span>
-                              <span className="font-light text-black dark:text-white font-mono text-xs">{paymentData.orderId}</span>
+                              <span className="font-light text-black dark:text-white font-mono text-xs break-all">{paymentData.orderId}</span>
                             </div>
                             <div className="flex justify-between">
                               <span className="text-gray-600 dark:text-gray-400">Expires:</span>
@@ -742,17 +742,17 @@ export default function Home() {
             </div>
 
             {/* Modal Footer */}
-            <div className="flex items-center justify-between p-8 border-t border-gray-200 dark:border-gray-700">
+            <div className="flex items-center justify-between p-4 sm:p-6 md:p-8 border-t border-gray-200 dark:border-gray-700">
               <button
                 onClick={prevStep}
                 disabled={currentStep === 1}
-                className={`flex items-center space-x-2 text-sm font-light transition-colors duration-200 ${
+                className={`flex items-center space-x-1 sm:space-x-2 text-xs sm:text-sm font-light transition-colors duration-200 ${
                   currentStep === 1
                     ? "text-gray-400 cursor-not-allowed"
                     : "text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white"
                 }`}
               >
-                <ChevronLeft className="w-4 h-4" />
+                <ChevronLeft className="w-3 h-3 sm:w-4 sm:h-4" />
                 <span>Previous</span>
               </button>
 
@@ -777,7 +777,7 @@ export default function Home() {
                 <button
                   onClick={handleSubmit}
                   disabled={!formData.phoneNumber || isCreatingOrder}
-                  className={`px-8 py-3 text-sm font-light transition-colors duration-200 flex items-center space-x-2 ${
+                  className={`px-4 sm:px-6 md:px-8 py-2 sm:py-3 text-xs sm:text-sm font-light transition-colors duration-200 flex items-center space-x-1 sm:space-x-2 ${
                     !formData.phoneNumber || isCreatingOrder
                       ? "text-gray-400 bg-gray-200 dark:bg-gray-700 cursor-not-allowed"
                       : "text-white bg-black dark:bg-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200"
