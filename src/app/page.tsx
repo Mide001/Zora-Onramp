@@ -240,16 +240,23 @@ export default function Home() {
           txHash: data.order.txHash
         });
         
+        console.log('Setting payment status to:', data.order.status);
+        
         if (data.order.status === 'completed') {
+          console.log('Status is completed, setting to completed');
           setPaymentStatus('completed');
           setUsdcTxHash(data.order.txHash || '');
         } else if (data.order.status === 'failed') {
+          console.log('Status is failed, setting to failed');
           setPaymentStatus('failed');
         } else if (data.order.status === 'confirmed') {
+          console.log('Status is confirmed, setting to processing');
           setPaymentStatus('processing');
         } else if (data.order.status === 'pending') {
+          console.log('Status is pending, setting to pending');
           setPaymentStatus('pending');
         } else {
+          console.log('Unknown status, setting to processing');
           // Default to processing for any other status
           setPaymentStatus('processing');
         }
@@ -653,6 +660,18 @@ export default function Home() {
                         </button>
                       </div>
                     </>
+                  )}
+
+                  {paymentStatus === 'processing' && (
+                    <div className="text-center space-y-4">
+                      <div className="animate-spin w-8 h-8 border-2 border-gray-300 border-t-black dark:border-t-white mx-auto"></div>
+                      <h3 className="text-lg font-light text-black dark:text-white">
+                        Processing Payment
+                      </h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                        We&apos;re confirming your payment and releasing your USDC...
+                      </p>
+                    </div>
                   )}
 
                   {paymentStatus === 'completed' && (
