@@ -54,8 +54,9 @@ export default function Home() {
 
     setIsValidatingUsername(true);
     try {
-      const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://zora-onramp-backend-production.up.railway.app';
+      const baseUrl = (process.env.NEXT_PUBLIC_API_BASE_URL || 'https://zora-onramp-backend-production.up.railway.app').replace(/\/$/, '');
       const apiUrl = `${baseUrl}/api/zora/resolve/${encodeURIComponent(username)}`;
+      console.log('Constructed API URL:', apiUrl);
       
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -126,7 +127,7 @@ export default function Home() {
     setIsCreatingOrder(true);
     try {
       // Call backend to create order
-      const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://zora-onramp-backend-production.up.railway.app';
+      const baseUrl = (process.env.NEXT_PUBLIC_API_BASE_URL || 'https://zora-onramp-backend-production.up.railway.app').replace(/\/$/, '');
       const response = await fetch(`${baseUrl}/api/orders/create`, {
         method: 'POST',
         headers: {
@@ -236,7 +237,7 @@ export default function Home() {
 
   const checkPaymentStatus = async (orderId: string) => {
     try {
-      const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://zora-onramp-backend-production.up.railway.app';
+      const baseUrl = (process.env.NEXT_PUBLIC_API_BASE_URL || 'https://zora-onramp-backend-production.up.railway.app').replace(/\/$/, '');
       const response = await fetch(`${baseUrl}/api/orders/${orderId}`, {
         headers: {
           'Content-Type': 'application/json',
@@ -287,7 +288,7 @@ export default function Home() {
 
   const verifyPaymentManually = async (orderId: string) => {
     try {
-      const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://zora-onramp-backend-production.up.railway.app';
+      const baseUrl = (process.env.NEXT_PUBLIC_API_BASE_URL || 'https://zora-onramp-backend-production.up.railway.app').replace(/\/$/, '');
       const response = await fetch(`${baseUrl}/api/orders/${orderId}/verify-payment`, {
         method: 'POST',
         headers: {
