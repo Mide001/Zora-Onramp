@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 interface VirtualAccount {
   accountNumber: string;
   bankName: string;
-  reference: string;
+  amount: number;
 }
 
 interface PaymentData {
@@ -13,6 +13,7 @@ interface PaymentData {
   orderHash: string;
   virtualAccount: VirtualAccount;
   usdcAmount: string;
+  expiresAt: string;
   expiresIn: string;
 }
 
@@ -53,13 +54,14 @@ export default function Home() {
 
     setIsValidatingUsername(true);
     try {
-      const response = await fetch('https://f7d8ecdc1a89.ngrok-free.app/api/validate-zora-username', {
-        method: 'POST',
+      const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://zora-onramp-backend-production.up.railway.app';
+      const apiUrl = `${baseUrl}/api/zora/resolve/${encodeURIComponent(username)}`;
+      
+      const response = await fetch(apiUrl, {
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'ngrok-skip-browser-warning': 'true'
         },
-        body: JSON.stringify({ username }),
       });
       
       if (!response.ok) {
@@ -69,12 +71,17 @@ export default function Home() {
       }
       
       const data = await response.json();
-      setIsUsernameValid(data.isValid);
-      if (data.isValid && data.address) {
+      setIsUsernameValid(data.success);
+      if (data.success && data.address) {
         setZoraAddress(data.address);
       }
     } catch (error) {
       console.error('Error validating username:', error);
+      if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
+        console.error('CORS Error: Backend may not be configured to allow requests from this origin');
+        console.error('Current origin:', window.location.origin);
+        console.error('Expected origin by backend: https://zora-onramp-frontend.vercel.app');
+      }
       setIsUsernameValid(false);
     } finally {
       setIsValidatingUsername(false);
@@ -119,18 +126,16 @@ export default function Home() {
     setIsCreatingOrder(true);
     try {
       // Call backend to create order
-      const response = await fetch('https://f7d8ecdc1a89.ngrok-free.app/api/orders/create', {
+      const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://zora-onramp-backend-production.up.railway.app';
+      const response = await fetch(`${baseUrl}/api/orders/create`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'ngrok-skip-browser-warning': 'true'
         },
         body: JSON.stringify({
-          address: zoraAddress, // Use the resolved Zora address
+          username: formData.username, // Send username instead of address
           amountNGN: parseFloat(formData.amount),
           email: formData.email,
-          fullName: formData.fullName,
-          phone: formData.phoneNumber
         }),
       });
       
@@ -231,9 +236,10 @@ export default function Home() {
 
   const checkPaymentStatus = async (orderId: string) => {
     try {
-      const response = await fetch(`https://f7d8ecdc1a89.ngrok-free.app/api/orders/${orderId}`, {
+      const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://zora-onramp-backend-production.up.railway.app';
+      const response = await fetch(`${baseUrl}/api/orders/${orderId}`, {
         headers: {
-          'ngrok-skip-browser-warning': 'true'
+          'Content-Type': 'application/json',
         }
       });
       
@@ -281,10 +287,11 @@ export default function Home() {
 
   const verifyPaymentManually = async (orderId: string) => {
     try {
-      const response = await fetch(`https://f7d8ecdc1a89.ngrok-free.app/api/orders/${orderId}/verify-payment`, {
+      const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://zora-onramp-backend-production.up.railway.app';
+      const response = await fetch(`${baseUrl}/api/orders/${orderId}/verify-payment`, {
         method: 'POST',
         headers: {
-          'ngrok-skip-browser-warning': 'true'
+          'Content-Type': 'application/json',
         }
       });
       
@@ -430,7 +437,7 @@ export default function Home() {
               Creator Economy
             </h3>
             <p className="text-sm text-gray-600 dark:text-gray-400 font-light leading-relaxed">
-              Get USDC to trade tokenized content and support creators on Zora's decentralized platform
+              Get USDC to trade tokenized content and support creators on Zora&apos;s decentralized platform
             </p>
           </div>
         </div>
@@ -661,8 +668,8 @@ export default function Home() {
                               <span className="font-light text-black dark:text-white font-mono text-xs">{paymentData.orderId}</span>
                             </div>
                             <div className="flex justify-between">
-                              <span className="text-gray-600 dark:text-gray-400">Reference:</span>
-                              <span className="font-light text-black dark:text-white font-mono text-xs">{paymentData.virtualAccount.reference}</span>
+                              <span className="text-gray-600 dark:text-gray-400">Expires:</span>
+                              <span className="font-light text-black dark:text-white text-xs">{paymentData.expiresIn}</span>
                             </div>
                           </div>
                         </div>
@@ -677,7 +684,7 @@ export default function Home() {
                               Checking for your payment...
                             </p>
                             <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-                              We're monitoring for your transfer
+                              We&apos;re monitoring for your transfer
                             </p>
                           </div>
                           <button
@@ -717,8 +724,8 @@ export default function Home() {
                             <span className="font-light text-black dark:text-white">{paymentData.usdcAmount} USDC</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-gray-600 dark:text-gray-400">Zora Address:</span>
-                            <span className="font-light text-black dark:text-white font-mono text-xs">{zoraAddress}</span>
+                            <span className="text-gray-600 dark:text-gray-400">Zora Username:</span>
+                            <span className="font-light text-black dark:text-white text-xs">{formData.username}</span>
                           </div>
                         </div>
                       </div>
