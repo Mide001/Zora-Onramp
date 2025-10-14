@@ -34,7 +34,6 @@ export default function Home() {
   const [paymentData, setPaymentData] = useState<PaymentData | null>(null);
   const [timeLeft, setTimeLeft] = useState(900); // 15 minutes in seconds
   const [paymentStatus, setPaymentStatus] = useState<'pending' | 'processing' | 'completed' | 'failed'>('pending');
-  const [usdcTxHash, setUsdcTxHash] = useState<string>("");
   const [isCreatingOrder, setIsCreatingOrder] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -173,7 +172,6 @@ export default function Home() {
     setPaymentData(null);
     setTimeLeft(900);
     setPaymentStatus('pending');
-    setUsdcTxHash("");
     setIsCreatingOrder(false);
   };
 
@@ -267,16 +265,12 @@ export default function Home() {
         
         console.log('Setting payment status to:', data.order.status);
         
-        if (data.order.status === 'completed') {
-          console.log('Status is completed, setting to completed');
+        if (data.order.status === 'completed' || data.order.status === 'confirmed') {
+          console.log('Status is completed/confirmed, setting to completed');
           setPaymentStatus('completed');
-          setUsdcTxHash(data.order.releaseTxHash || '');
         } else if (data.order.status === 'failed') {
           console.log('Status is failed, setting to failed');
           setPaymentStatus('failed');
-        } else if (data.order.status === 'confirmed') {
-          console.log('Status is confirmed, setting to processing');
-          setPaymentStatus('processing');
         } else if (data.order.status === 'pending') {
           console.log('Status is pending, setting to pending');
           setPaymentStatus('pending');
@@ -310,12 +304,11 @@ export default function Home() {
       console.log('Manual verification response:', data);
       
       if (data.success && data.order) {
-        if (data.order.status === 'completed') {
+        if (data.order.status === 'completed' || data.order.status === 'confirmed') {
           setPaymentStatus('completed');
-          setUsdcTxHash(data.order.releaseTxHash || '');
         } else if (data.order.status === 'failed') {
           setPaymentStatus('failed');
-        } else if (data.order.status === 'confirmed') {
+        } else {
           setPaymentStatus('processing');
         }
       }
@@ -716,14 +709,6 @@ export default function Home() {
                       <p className="text-sm text-gray-600 dark:text-gray-400">
                         We&apos;ve sent {paymentData.usdcAmount} USDC to your Zora account
                       </p>
-                      {usdcTxHash && (
-                        <div className="p-4 border border-gray-300 dark:border-gray-600">
-                          <h4 className="text-sm font-light text-black dark:text-white mb-2">Transaction Hash</h4>
-                          <p className="text-xs font-mono text-gray-600 dark:text-gray-400 break-all">
-                            {usdcTxHash}
-                          </p>
-                        </div>
-                      )}
                       <div className="p-4 border border-gray-300 dark:border-gray-600">
                         <div className="space-y-2 text-sm">
                           <div className="flex justify-between">
